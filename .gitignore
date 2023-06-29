@@ -1,0 +1,7 @@
+evaluation/lesionwise
+__pycache__
+*zip
+*tar*
+all_scores.csv
+results.json
+inputs.yml
