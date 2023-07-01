@@ -1,7 +1,11 @@
-evaluation/lesionwise
+evaluation/tests/
+evaluation/tmpdir/
 __pycache__
 *zip
 *tar*
 all_scores.csv
 results.json
 inputs.yml
+
+# Don't track code in `lesionwise` for now
+evaluation/lesionwise
