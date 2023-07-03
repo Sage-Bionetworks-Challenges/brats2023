@@ -26,7 +26,11 @@ outputs:
   outputBinding:
     glob: results.json
 - id: status
-  type: string
+  type:
+    type: enum
+    symbols:
+    - INVALID
+    - VALIDATED
   outputBinding:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['submission_status'])
