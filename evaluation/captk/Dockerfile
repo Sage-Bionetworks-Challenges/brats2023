@@ -11,6 +11,9 @@ RUN curl https://captk.projects.nitrc.org/Hausdorff95_linux.zip -O  && \
 
 FROM python:3.9-slim
 COPY --from=captk /work /work
+
+# Copy over shared libraries required by CaPTk application, then
+# update the links and cache with `ldconfig`.
 COPY --from=captk /usr/lib64/* /usr/lib/.
 RUN ldconfig
 
