@@ -35,7 +35,7 @@ steps:
     doc: >
       Give challenge organizers `download` permissions to the submission logs
     run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.3/cwl/set_permissions.cwl
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/set_permissions.cwl
     in:
       - id: entityid
         source: "#submitterUploadSynId"
@@ -50,7 +50,7 @@ steps:
   download_submission:
     doc: Download submission
     run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.3/cwl/get_submission.cwl
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -86,9 +86,9 @@ steps:
       - id: entity_type
         source: "#download_submission/entity_type"
       - id: pred_pattern
-        default: "(\d{5}-\d{3})-t1n-inference"
+        default: "(\\d{5}-\\d{3})-t1n-inference"
       - id: gold_pattern
-        default: "(\d{5}-\d{3})-mask-healthy"
+        default: "(\\d{5}-\\d{3})-mask-healthy"
     out:
       - id: results
       - id: status
@@ -97,7 +97,7 @@ steps:
   send_validation_results:
     doc: Send email of the validation results to the submitter
     run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.3/cwl/validate_email.cwl
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/validate_email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -117,7 +117,7 @@ steps:
       Add `submission_status` and `submission_errors` annotations to the
       submission
     run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.3/cwl/annotate_submission.cwl
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -137,7 +137,7 @@ steps:
       exception to stop the workflow - this will prevent the attempt of
       scoring invalid predictions file (which will then result in errors)
     run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.3/cwl/check_status.cwl
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/check_status.cwl
     in:
       - id: status
         source: "#validate/status"
@@ -188,7 +188,7 @@ steps:
     doc: >
       Update `submission_status` and add the scoring metric annotations
     run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v3.3/cwl/annotate_submission.cwl
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
     in:
       - id: submissionid
         source: "#submissionId"
