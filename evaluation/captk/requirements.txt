@@ -1,0 +1,3 @@
+nibabel==5.1.0
+pandas==1.3.4
+synapseclient==2.7.2

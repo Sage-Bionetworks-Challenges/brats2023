@@ -1,8 +1,4 @@
-FROM cbica/captk:release-1.8.1
-
-RUN yum install -y xz-devel
-RUN pip install --upgrade pip
-RUN pip install pandas synapseclient nibabel
+FROM cbica/captk:release-1.8.1 as captk
 
 WORKDIR /work/CaPTk/bin/
 
@@ -13,13 +9,18 @@ RUN curl https://captk.projects.nitrc.org/Hausdorff95_linux.zip -O  && \
     chmod +x Hausdorff95 && \
     rm Hausdorff95_linux.zip
 
+FROM python:3.9-slim
+COPY --from=captk /work /work
+COPY --from=captk /usr/lib64/* /usr/lib/.
+RUN ldconfig
+
 WORKDIR /usr/local/bin/
+
+COPY requirements.txt .
+RUN pip install --upgrade pip && \
+    pip install -r requirements.txt
 
 COPY *.py .
 RUN chmod +x *.py
 COPY update_labels.sh .
 RUN chmod +x update_labels.sh
-
-# Override the base image's entrypoint so that the GUI does
-# not start when the container is run
-ENTRYPOINT ["/usr/bin/env"]
