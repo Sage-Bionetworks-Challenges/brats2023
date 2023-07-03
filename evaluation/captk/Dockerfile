@@ -15,10 +15,10 @@ RUN curl https://captk.projects.nitrc.org/Hausdorff95_linux.zip -O  && \
 
 WORKDIR /usr/local/bin/
 
-COPY utils.py .
-COPY validate.py .
-COPY score.py .
+COPY *.py .
 RUN chmod +x *.py
+COPY update_labels.sh .
+RUN chmod +x update_labels.sh
 
 # Override the base image's entrypoint so that the GUI does
 # not start when the container is run
