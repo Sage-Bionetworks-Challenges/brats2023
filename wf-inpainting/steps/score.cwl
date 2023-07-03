@@ -34,9 +34,8 @@ outputs:
     outputEval: $(JSON.parse(self[0].contents)['submission_status'])
     loadContents: true
 
-baseCommand: python
+baseCommand: /app/score.py
 arguments:
-- valueFrom: /app/score.py
 - prefix: --parent_id
   valueFrom: $(inputs.parent_id)
 - prefix: -s
