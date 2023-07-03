@@ -19,6 +19,7 @@ import synapseclient
 import utils
 import evaluation_utils
 
+
 def get_args():
     """Set up command-line interface and get arguments."""
     parser = argparse.ArgumentParser()
@@ -70,7 +71,8 @@ def score(gold_dir, mask_dir, pred_lst, label):
     for pred in pred_lst:
         scan_id = re.search(r"\d{5}-\d{3}", pred).group()
         identifier = f"{label}-{scan_id}"
-        mask = os.path.join(mask_dir, identifier, f"{identifier}-mask-healthy.nii.gz")
+        mask = os.path.join(mask_dir, identifier,
+                            f"{identifier}-mask-healthy.nii.gz")
         gold = os.path.join(gold_dir, identifier, f"{identifier}-t1n.nii.gz")
         results = (
             calculate_metrics(pred, mask, gold)
@@ -84,9 +86,9 @@ def score(gold_dir, mask_dir, pred_lst, label):
 def main():
     """Main function."""
     args = get_args()
-    preds = utils.unzip_file(args.predictions_file)
-    golds = utils.unzip_file(args.goldstandard_file, pattern="t1n")
-    masks = utils.unzip_file(args.healthy_masks)
+    preds = utils.inspect_zip(args.predictions_file)
+    golds = utils.inspect_zip(args.goldstandard_file, pattern="t1n")
+    masks = utils.inspect_zip(args.healthy_masks)
 
     gold_dir = os.path.normpath(golds[0]).split(os.sep)[0]
     mask_dir = os.path.normpath(masks[0]).split(os.sep)[0]

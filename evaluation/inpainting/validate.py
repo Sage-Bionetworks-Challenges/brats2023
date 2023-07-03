@@ -98,7 +98,8 @@ def main():
         )
     else:
         preds = utils.inspect_zip(args.predictions_file, path=args.tmp_dir)
-        golds = utils.inspect_zip(args.goldstandard_file, unzip=False, path=args.tmp_dir)
+        golds = utils.inspect_zip(args.goldstandard_file,
+                                  unzip=False, path=args.tmp_dir)
         if preds:
             invalid_reasons.extend(validate_file_format(preds, args.tmp_dir))
             invalid_reasons.extend(validate_filenames(
