@@ -50,3 +50,15 @@ arguments:
 hints:
   DockerRequirement:
     dockerPull: docker.synapse.org/syn51156910/lesionwise-evaluation:v1
+
+s:author:
+- class: s:Person
+  s:identifier: https://orcid.org/0000-0002-5622-7998
+  s:email: verena.chung@sagebase.org
+  s:name: Verena Chung
+
+s:codeRepository: https://github.com/Sage-Bionetworks-Challenges/brats2023
+s:license: https://spdx.org/licenses/Apache-2.0
+
+$namespaces:
+  s: https://schema.org/
