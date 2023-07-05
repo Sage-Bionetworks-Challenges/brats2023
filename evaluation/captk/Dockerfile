@@ -9,7 +9,7 @@ RUN curl https://captk.projects.nitrc.org/Hausdorff95_linux.zip -O  \
     && chmod +x Hausdorff95 \
     && rm Hausdorff95_linux.zip
 
-FROM python:3.9-slim
+FROM python:3.10-slim
 COPY --from=captk /work /work
 
 # Copy over shared libraries required by CaPTk application, then
