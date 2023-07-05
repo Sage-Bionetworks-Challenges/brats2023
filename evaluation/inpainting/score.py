@@ -110,8 +110,16 @@ def main():
 
     # Results file for annotations.
     with open(args.output, "w") as out:
-        res_dict = {**results.loc["mean"].to_dict(),
-                    **results.loc["sd"].to_dict(),
+        res_dict = {**results
+                    .loc["mean"]
+                    .rename({'MSE': "MSE_mean",
+                             'PSNR': "PSNR_mean",
+                             'SSIM': "SSIM_mean"}),
+                    **results
+                    .loc["sd"]
+                    .rename({'MSE': "MSE_sd",
+                             'PSNR': "PSNR_sd",
+                             'SSIM': "SSIM_sd"}),
                     "cases_evaluated": cases_evaluated,
                     "submission_scores": csv.id,
                     "submission_status": "SCORED"}

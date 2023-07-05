@@ -133,8 +133,22 @@ def main():
 
     # Results file for annotations.
     with open(args.output, "w") as out:
-        res_dict = {**results.loc["mean"].to_dict(),
-                    **results.loc["variance"].to_dict(),
+        res_dict = {**results
+                    .loc["mean"]
+                    .rename({'Dice_ET': "Dice_ET_mean",
+                             'Dice_TC': "Dice_TC_mean",
+                             'Dice_WT': "Dice_WT_mean",
+                             'Hausdorff95_ET': "Hausdorff95_ET_mean",
+                             'Hausdorff95_TC': "Hausdorff95_TC_mean",
+                             'Hausdorff95_WT': "Hausdorff95_WT_mean", }),
+                    **results
+                    .loc["variance"]
+                    .rename({'Dice_ET': "Dice_ET_var",
+                             'Dice_TC': "Dice_TC_var",
+                             'Dice_WT': "Dice_WT_var",
+                             'Hausdorff95_ET': "Hausdorff95_ET_var",
+                             'Hausdorff95_TC': "Hausdorff95_TC_var",
+                             'Hausdorff95_WT': "Hausdorff95_WT_var", }),
                     "cases_evaluated": cases_evaluated,
                     "submission_scores": csv.id,
                     "submission_status": "SCORED"}
