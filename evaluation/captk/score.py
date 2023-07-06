@@ -117,12 +117,12 @@ def main():
     flagged_cases = int(results.reset_index().scan_id.str.count(r"\*").sum())
     cases_evaluated = cases_predicted - flagged_cases
 
-    results.loc["mean"] = results.mean()
-    results.loc["variance"] = results.var()
-    results.loc["sd"] = results.std()
-    results.loc["median"] = results.median()
-    results.loc["25quantile"] = results.quantile(q=0.25)
-    results.loc["75quantile"] = results.quantile(q=0.75)
+    metrics = (results
+               .describe()
+               .rename(index={'25%': "25quantile", '50%': "median", '75%': "75quantile"})
+               .drop(["count", "min", "max"]))
+    metrics.loc["variance"] = results.var()
+    results = pd.concat([results, metrics])
 
     # CSV file of scores for all scans.
     results.to_csv("all_scores.csv")
