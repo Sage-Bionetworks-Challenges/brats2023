@@ -63,13 +63,23 @@ steps:
       - id: evaluation_id
       - id: results
 
+  get_task_entities:
+    doc: Get goldstandard and label based on task number
+    run: ../shared/get_task.cwl
+    in:
+      - id: queue
+        source: "#download_submission/evaluation_id"
+    out:
+      - id: synid
+      - id: label
+
   download_goldstandard:
     doc: Download goldstandard
     run: |-
       https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
     in:
       - id: synapseid
-        valueFrom: "syn51514102"
+        source: "#get_task_entities/synid"
       - id: synapse_config
         source: "#synapseConfig"
     out:
@@ -168,6 +178,8 @@ steps:
         source: "#update_labels/predictions"
       - id: goldstandard
         source: "#download_goldstandard/filepath"
+      - id: label
+        source: "#get_task_entities/label"
     out:
       - id: results
       - id: status

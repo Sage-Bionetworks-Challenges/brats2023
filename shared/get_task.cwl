@@ -37,12 +37,12 @@ expression: |
       };
     } else if (inputs.queue == "9615313") {
       return {
-        synid: "",
+        synid: "syn51930262",
         label: "BraTS-MEN"
       };
     } else if (inputs.queue == "9615345") {
       return {
-        synid: "",
+        synid: "syn51929881",
         label: "BraTS-PED"
       };
     } else {
