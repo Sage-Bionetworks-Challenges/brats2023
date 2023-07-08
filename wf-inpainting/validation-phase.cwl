@@ -75,6 +75,18 @@ steps:
     out:
       - id: filepath
 
+  download_goldstandard:
+    doc: Download goldstandard
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
+    in:
+      - id: synapseid
+        valueFrom: "syn51514110"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: filepath
+
   validate:
     doc: Validate submission, which should be a tar/zip of NIfTI files
     run: steps/validate.cwl
@@ -162,9 +174,10 @@ steps:
       - id: masks
         source: "#download_masks/filepath"
       - id: goldstandard
-        default:
-          class: File
-          location: "/home/vchung/gold.tar.gz"
+        source: "#download_goldstandard/filepath"
+        # default:
+        #   class: File
+        #   location: "/home/vchung/gold.tar.gz"
       - id: check_validation_finished 
         source: "#check_validation_status/finished"
     out:
