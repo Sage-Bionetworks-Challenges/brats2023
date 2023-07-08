@@ -69,7 +69,7 @@ outputs:
   outputBinding:
     outputEval: $( true )
 
-baseCommand: python
+baseCommand: python3
 arguments:
 - valueFrom: email.py
 - prefix: -s
