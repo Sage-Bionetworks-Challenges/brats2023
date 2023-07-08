@@ -63,8 +63,8 @@ steps:
       - id: evaluation_id
       - id: results
 
-  download_goldstandard:
-    doc: Download goldstandard
+  download_masks:
+    doc: Download healthy masks
     run: |-
       https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
     in:
@@ -82,7 +82,7 @@ steps:
       - id: input_file
         source: "#download_submission/filepath"
       - id: goldstandard
-        source: "#download_goldstandard/filepath"
+        source: "#download_masks/filepath"
       - id: entity_type
         source: "#download_submission/entity_type"
       - id: pred_pattern
@@ -159,8 +159,10 @@ steps:
         source: "#synapseConfig"
       - id: input_file
         source: "#download_submission/filepath"
+      - id: masks
+        source: "#download_masks/filepath"
       - id: goldstandard
-        source: "#download_goldstandard/filepath"
+        valueFrom: "/home/vchung/gold.tar.gz"
       - id: check_validation_finished 
         source: "#check_validation_status/finished"
     out:
@@ -179,9 +181,6 @@ steps:
         source: "#synapseConfig"
       - id: results
         source: "#score/results"
-      # OPTIONAL: add annotations to be withheld from participants to `[]`
-      # - id: private_annotations
-      #   default: []
     out: [finished]
 
   add_score_annots:
