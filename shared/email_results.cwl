@@ -8,7 +8,7 @@ requirements:
 - class: InlineJavascriptRequirement
 - class: InitialWorkDirRequirement
   listing:
-  - entryname: score_email.py
+  - entryname: email.py
     entry: |
       #!/usr/bin/env python
       import synapseclient
@@ -19,7 +19,6 @@ requirements:
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
       parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
       parser.add_argument("-r", "--results", required=True, help="Resulting scores")
-      parser.add_argument("-p", "--private_annotations", nargs="+", default=[], help="annotations to not be sent via e-mail")
 
       args = parser.parse_args()
       syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -42,13 +41,13 @@ requirements:
           csv_id = annots['submission_scores']
           del annots['submission_status']
           del annots['submission_scores']
-          subject = "Submission to '%s' scored!" % evaluation.name
+          subject = f"Submission to '{evaluation.name}' scored!"
           message = [
-            "Hello %s,\n\n" % name,
-            "Your submission (id: %s) has been scored and below are the metric averages:\n\n" % sub.id,
+            f"Hello {name},\n\n",
+            f"Your submission (id: {sub.id}) has been scored and below are the metric averages:\n\n",
             "\n".join([i + " : " + str(annots[i]) for i in annots]),
             "\n\n",
-            "To look at each scan's score, go here: https://www.synapse.org/#!Synapse:%s" % csv_id,
+            f"You may look at each scan's individual scores here: https://www.synapse.org/#!Synapse:{csv_id}",
             "\n\nSincerely,\nChallenge Administrator"
           ]
           syn.sendMessage(
