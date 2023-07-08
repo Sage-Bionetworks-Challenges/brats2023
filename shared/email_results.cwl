@@ -8,7 +8,7 @@ requirements:
 - class: InlineJavascriptRequirement
 - class: InitialWorkDirRequirement
   listing:
-  - entryname: email.py
+  - entryname: email_results.py
     entry: |
       #!/usr/bin/env python
       import synapseclient
@@ -71,7 +71,7 @@ outputs:
 
 baseCommand: python3
 arguments:
-- valueFrom: email.py
+- valueFrom: email_results.py
 - prefix: -s
   valueFrom: $(inputs.submissionid)
 - prefix: -c
