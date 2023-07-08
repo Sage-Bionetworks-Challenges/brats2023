@@ -17,8 +17,6 @@ inputs:
   type: File
 - id: masks
   type: File
-- id: label
-  type: string
 - id: check_validation_finished
   type: boolean?
 
