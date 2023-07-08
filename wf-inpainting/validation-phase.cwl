@@ -162,7 +162,9 @@ steps:
       - id: masks
         source: "#download_masks/filepath"
       - id: goldstandard
-        valueFrom: "/home/vchung/gold.tar.gz"
+        default:
+          class: File
+          location: "/home/vchung/gold.tar.gz"
       - id: check_validation_finished 
         source: "#check_validation_status/finished"
     out:
