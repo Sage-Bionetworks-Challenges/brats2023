@@ -17,7 +17,7 @@ COPY --from=captk /work /work
 COPY --from=captk /usr/lib64/* /usr/lib/.
 RUN ldconfig
 RUN apt-get update \
-    && apt-get -y install unzip \
+    && apt-get -y install unzip file \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /usr/local/bin/
