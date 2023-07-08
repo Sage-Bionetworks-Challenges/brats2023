@@ -116,7 +116,7 @@ def main():
                              'PSNR': "PSNR_mean",
                              'SSIM': "SSIM_mean"}),
                     **results
-                    .loc["sd"]
+                    .loc["std"]
                     .rename({'MSE': "MSE_sd",
                              'PSNR': "PSNR_sd",
                              'SSIM': "SSIM_sd"}),
