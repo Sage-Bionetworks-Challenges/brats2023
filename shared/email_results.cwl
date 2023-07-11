@@ -39,11 +39,11 @@ requirements:
       status = annots['submission_status']
       if status == "SCORED":
           csv_id = annots['submission_scores']
-          csv_full_id = annots.get('submission_scores_full', '')
+          csv_full_id = annots.get('submission_scores_legacy', '')
           del annots['submission_status']
           del annots['submission_scores']
           if csv_full_id:
-            del annots['submission_scores_full']
+            del annots['submission_scores_legacy']
           subject = f"Submission to '{evaluation.name}' scored!"
           message = [
             f"Hello {name},\n\n",
@@ -53,7 +53,7 @@ requirements:
           ]
           if csv_full_id:
             message.append(f"Each scan's individual lesion-wise scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
-            message.append(f"\nFull scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
+            message.append(f"\nLegacy scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
           else:
             message.append(f"Each scan's individual scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
           message.append("\n\nSincerely,\nChallenge Administrator")
