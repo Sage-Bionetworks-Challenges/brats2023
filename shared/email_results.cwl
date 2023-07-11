@@ -52,10 +52,10 @@ requirements:
             "\n\n"
           ]
           if csv_full_id:
-            message.append(f"You may look at each scan's individual lesion-wise scores here: https://www.synapse.org/#!Synapse:{csv_id}")
+            message.append(f"Each scan's individual lesion-wise scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
             message.append(f"\nFull scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
           else:
-            message.append(f"You may look at each scan's individual scores here: https://www.synapse.org/#!Synapse:{csv_id}")
+            message.append(f"Each scan's individual scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
           message.append("\n\nSincerely,\nChallenge Administrator")
           syn.sendMessage(
               userIds=[participantid],
