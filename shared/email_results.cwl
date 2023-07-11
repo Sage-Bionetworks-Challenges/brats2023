@@ -39,17 +39,24 @@ requirements:
       status = annots['submission_status']
       if status == "SCORED":
           csv_id = annots['submission_scores']
+          csv_full_id = annots.get('submission_scores_full', '')
           del annots['submission_status']
           del annots['submission_scores']
+          if csv_full_id:
+            del annots['submission_scores_full']
           subject = f"Submission to '{evaluation.name}' scored!"
           message = [
             f"Hello {name},\n\n",
             f"Your submission (id: {sub.id}) has been scored and below are the metric averages:\n\n",
             "\n".join([i + " : " + str(annots[i]) for i in annots]),
-            "\n\n",
-            f"You may look at each scan's individual scores here: https://www.synapse.org/#!Synapse:{csv_id}",
-            "\n\nSincerely,\nChallenge Administrator"
+            "\n\n"
           ]
+          if csv_full_id:
+            message.append(f"You may look at each scan's individual lesion-wise scores here: https://www.synapse.org/#!Synapse:{csv_id}")
+            message.append(f"\nFull scores are available here: https://www.synapse.org/#!Synapse:{csv_full_id}")
+          else:
+            message.append(f"You may look at each scan's individual scores here: https://www.synapse.org/#!Synapse:{csv_id}")
+          message.append("\n\nSincerely,\nChallenge Administrator")
           syn.sendMessage(
               userIds=[participantid],
               messageSubject=subject,
