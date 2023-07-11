@@ -32,7 +32,7 @@ expression: |
       };
     } else if (inputs.queue == "9615340") {
       return {
-        synid: "",
+        synid: "syn52045897",
         label: "BraTS-SSA"
       };
     } else if (inputs.queue == "9615313") {
