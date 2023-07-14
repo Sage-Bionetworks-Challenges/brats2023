@@ -30,7 +30,7 @@ outputs:
     outputEval: $(JSON.parse(self[0].contents)['submission_status'])
     loadContents: true
 
-baseCommand: score.py
+baseCommand: score_aug.py
 arguments:
 - prefix: --parent_id
   valueFrom: $(inputs.parent_id)
@@ -47,7 +47,7 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: docker.synapse.org/syn51156910/captk-evaluation:v1
+    dockerPull: docker.synapse.org/syn51156910/lesionwise-evaluation:v1
 
 s:author:
 - class: s:Person
