@@ -40,8 +40,6 @@ arguments:
   valueFrom: $(inputs.input_file.path)
 - prefix: -g
   valueFrom: $(inputs.goldstandard.path)
-- prefix: -c
-  valueFrom: /work/CaPTk
 - prefix: -o
   valueFrom: results.json
 
