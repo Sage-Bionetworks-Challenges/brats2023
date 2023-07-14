@@ -8,4 +8,5 @@ results.json
 inputs.yml
 
 # Don't track code in `lesionwise` for now
-evaluation/lesionwise
+evaluation/lesionwise/lesionwise_eval.py
+evaluation/lesionwise/surface_distance/
