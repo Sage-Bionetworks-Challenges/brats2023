@@ -57,7 +57,10 @@ def calculate_metrics(result, mask, gold):
     t1n = torch.Tensor(t1n_img.get_fdata()).unsqueeze(0).unsqueeze(0)
 
     # Compute metrics
-    mse, psnr, ssim = evaluation_utils.compute_metrics(pred, t1n, mask)
+    mse, psnr, ssim = evaluation_utils.compute_metrics(
+        gt_image=t1n,
+        prediction=pred,
+        mask=mask)
     return pd.DataFrame({
         'MSE': [mse],
         'PSNR': [psnr],
