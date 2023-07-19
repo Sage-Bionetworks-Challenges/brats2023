@@ -1,5 +1,6 @@
 """Common util functions for validation and scoring."""
 import os
+import rarfile
 import tarfile
 import zipfile
 
@@ -43,6 +44,11 @@ def inspect_zip(f, unzip=True, path=".", pattern=""):
             if unzip:
                 tar_ref.extractall(path=path, members=members)
             imgs = [member.name for member in members]
+    elif rarfile.is_rarfile(f):
+        with rarfile.RarFile(f) as rar_ref:
+            imgs = _filter_zip(rar_ref.infolist(), pattern)
+            if unzip:
+                rar_ref.extractall(path=path, members=imgs)
     else:
         imgs = []
     return imgs
