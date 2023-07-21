@@ -54,7 +54,7 @@ def check_file_contents(img, parent):
         return _check_header(img)
     except nib.filebasedimages.ImageFileError:
         return ("One or more predictions cannot be opened as a "
-                "NIfTI file")
+                "NIfTI file.")
 
 
 def validate_file_format(preds, parent):
