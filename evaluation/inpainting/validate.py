@@ -12,6 +12,12 @@ import json
 import nibabel as nib
 import utils
 
+DIM = (240, 240, 155)
+ORIGIN = [[-1.,   0.,   0.,  -0.],
+          [0.,  -1.,   0., 239.],
+          [0.,   0.,   1.,   0.],
+          [0.,   0.,   0.,   1.]]
+
 
 def get_args():
     """Set up command-line interface and get arguments."""
@@ -32,13 +38,23 @@ def get_args():
     return parser.parse_args()
 
 
+def _check_header(img):
+    """Check if img has dimension: 240x240x155 and origin: [0, -239, 0]."""
+    status = "valid"
+    if img.header.get_data_shape() != DIM and \
+            not (img.header.get_qform() == ORIGIN).all():
+        status = "invalid"
+    return status
+
+
 def check_file_contents(img, parent):
     """Check that the file can be opened as NIfTI."""
     try:
-        nib.load(os.path.join(parent, img))
-        return "valid"
+        img = nib.load(os.path.join(parent, img))
+        return _check_header(img)
     except nib.filebasedimages.ImageFileError:
-        return "invalid"
+        return ("One or more predictions cannot be opened as a "
+                "NIfTI file")
 
 
 def validate_file_format(preds, parent):
@@ -48,8 +64,8 @@ def validate_file_format(preds, parent):
 
         # Ensure that all file contents are NIfTI.
         if not all(check_file_contents(pred, parent) == "valid" for pred in preds):
-            error = [("One or more predictions cannot be opened as a "
-                      "NIfTI file.")]
+            error = [("One or more predictions is not a NIfTI file with "
+                      "dimension of 240x240x155 or origin at [0, -239, 0].")]
     else:
         error = ["Not all files in the archive are NIfTI files (*.nii.gz)."]
     return error
