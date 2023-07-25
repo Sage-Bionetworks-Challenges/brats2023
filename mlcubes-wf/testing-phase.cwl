@@ -47,6 +47,55 @@ steps:
         source: "#synapseConfig"
     out: []
 
+  download_tarball:
+    doc: Download MLCube tarball submission
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: filepath
+      - id: entity_id
+      - id: entity_type
+      - id: evaluation_id
+      - id: results
+  
+  validate_tarball:
+    doc: Check that tarball is unique and contains all necessary scripts/files
+    run: steps/validate_tarball.cwl
+    in:
+      - id: input_file
+        source: "#download_tarball/filepath"
+      - id: submissionid
+        source: "#submissionId"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: submission_view
+        valueFrom: "syn52146382"
+    out:
+      - id: results
+      - id: status
+      - id: invalid_reasons
+      - id: docker_id
+
+  download_docker:
+    doc: Download MLCube Docker submission
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
+    in:
+      - id: submissionid
+        source: "#validate_tarball/docker_id"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: filepath
+      - id: entity_id
+      - id: entity_type
+      - id: evaluation_id
+      - id: results
  
 s:author:
 - class: s:Person
