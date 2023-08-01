@@ -40,11 +40,12 @@ def get_args():
 
 def _check_header(img):
     """Check if img has dimension: 240x240x155 and origin: [0, -239, 0]."""
-    status = "valid"
+    error = ""
     if img.header.get_data_shape() != DIM and \
             not (img.header.get_qform() == ORIGIN).all():
-        status = "invalid"
-    return status
+        error = ("One or more predictions is not a NIfTI file with "
+                 "dimension of 240x240x155 or origin at [0, -239, 0].")
+    return error
 
 
 def check_file_contents(img, parent):
@@ -54,7 +55,7 @@ def check_file_contents(img, parent):
         return _check_header(img)
     except nib.filebasedimages.ImageFileError:
         return ("One or more predictions cannot be opened as a "
-                "NIfTI file")
+                "NIfTI file.")
 
 
 def validate_file_format(preds, parent):
@@ -62,10 +63,9 @@ def validate_file_format(preds, parent):
     error = []
     if all(pred.endswith(".nii.gz") for pred in preds):
 
-        # Ensure that all file contents are NIfTI.
-        if not all(check_file_contents(pred, parent) == "valid" for pred in preds):
-            error = [("One or more predictions is not a NIfTI file with "
-                      "dimension of 240x240x155 or origin at [0, -239, 0].")]
+        # Ensure that all file contents are NIfTI with correct params.
+        if not all((res := check_file_contents(pred, parent)) == "" for pred in preds):
+            error = [res]
     else:
         error = ["Not all files in the archive are NIfTI files (*.nii.gz)."]
     return error
