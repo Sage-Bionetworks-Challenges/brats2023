@@ -1,7 +1,6 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: Workflow
-
 label: BraTS 2023 - Tasks 1-5 workflow
 
 requirements:

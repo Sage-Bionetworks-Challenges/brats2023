@@ -1,8 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-
-label: Validate segmentations
+label: Validate augmentation submission
 
 requirements:
 - class: InlineJavascriptRequirement
