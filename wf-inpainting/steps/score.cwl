@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-label: Score Augmented Segmentations
+label: Score Inpainting
 
 requirements:
 - class: InlineJavascriptRequirement
