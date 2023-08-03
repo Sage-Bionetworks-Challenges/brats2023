@@ -27,7 +27,7 @@ expression: |
       };
     } else if (inputs.queue == "9615344") {
       return {
-        synid: "",
+        synid: "syn52237053",
         label: "BraTS-MET"
       };
     } else if (inputs.queue == "9615340") {
