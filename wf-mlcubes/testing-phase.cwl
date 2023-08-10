@@ -63,9 +63,9 @@ steps:
       - id: evaluation_id
       - id: results
   
-  validate_tarball:
+  get_corresponding_docker:
     doc: Check that tarball is unique and contains all necessary scripts/files
-    run: steps/validate_tarball.cwl
+    run: steps/get_docker_sub.cwl
     in:
       - id: input_file
         source: "#download_tarball/filepath"
@@ -75,6 +75,8 @@ steps:
         source: "#synapseConfig"
       - id: submission_view
         valueFrom: "syn52146382"
+      - id: evaluation_id
+        valueFrom: "9615387"
     out:
       - id: results
       - id: status
@@ -87,7 +89,7 @@ steps:
       https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
     in:
       - id: submissionid
-        source: "#validate_tarball/docker_id"
+        source: "#get_corresponding_docker/docker_id"
       - id: synapse_config
         source: "#synapseConfig"
     out:

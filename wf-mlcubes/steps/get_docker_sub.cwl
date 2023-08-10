@@ -1,14 +1,13 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-
 label: Get corresponding MLCube Docker image
 
 requirements:
 - class: InlineJavascriptRequirement
 - class: InitialWorkDirRequirement
   listing:
-  - entryname: email_results.py
+  - entryname: get_docker_sub.py
     entry: |
       #!/usr/bin/env python
       import synapseclient
@@ -17,6 +16,7 @@ requirements:
       import os
       parser = argparse.ArgumentParser()
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
+      parser.add_argument("-e", "--evaluationid", required=True, help="Evaluation ID")
       parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
       parser.add_argument("-v", "--submission_view", required=True, help="synID of submission view")
       parser.add_argument("-r", "--results", required=True, help="Resulting scores")
@@ -31,8 +31,9 @@ requirements:
       
       query = (f"SELECT id FROM {args.submission_view} "
                f"WHERE name = '{name}' "
-               f"AND submitterid = {submitter} "
-               f"AND status = 'ACCEPTED'")
+               f"id <> {args.submissionid} "
+               f"AND evaluationid = {args.evaluationid} "
+               f"AND submitterid = {submitter} ")
       res = syn.tableQuery(query).asDataFrame()["id"]
       if len(res) == 1:
         docker_id = res.iloc[0]["id"]
@@ -47,6 +48,8 @@ inputs:
 - id: synapse_config
   type: File
 - id: submission_view
+  type: string
+- id: evaluation_id
   type: string
 
 outputs:
@@ -75,7 +78,7 @@ outputs:
 
 baseCommand: python3
 arguments:
-- valueFrom: email_results.py
+- valueFrom: get_docker_sub.py
 - prefix: -s
   valueFrom: $(inputs.submissionid)
 - prefix: -c
@@ -84,6 +87,8 @@ arguments:
   valueFrom: $(inputs.submission_view)
 - prefix: -r
   valueFrom: results.json
+- prefix: -e
+  valueFrom: $(inputs.evaluation_id)
 
 hints:
   DockerRequirement:
