@@ -19,6 +19,7 @@ requirements:
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
       parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
       parser.add_argument("-r", "--results", required=True, help="Resulting scores")
+      parser.add_argument("-p", "--private_annotations", nargs="+", default=[], help="annotations to not be sent via e-mail")
 
       args = parser.parse_args()
       syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -42,6 +43,8 @@ requirements:
           csv_full_id = annots.get('submission_scores_legacy', '')
           del annots['submission_status']
           del annots['submission_scores']
+          for annot in args.private_annotations:
+            del annots[annot]
           if csv_full_id:
             del annots['submission_scores_legacy']
           subject = f"Submission to '{evaluation.name}' scored!"
@@ -69,6 +72,8 @@ inputs:
   type: File
 - id: results
   type: File
+- id: private_annotations
+  type: string[]?
 
 outputs:
 - id: finished
@@ -85,6 +90,8 @@ arguments:
   valueFrom: $(inputs.synapse_config.path)
 - prefix: -r
   valueFrom: $(inputs.results)
+- prefix: -p
+  valueFrom: $(inputs.private_annotations)
 
 hints:
   DockerRequirement:

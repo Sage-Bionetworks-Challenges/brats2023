@@ -195,6 +195,8 @@ steps:
         source: "#synapseConfig"
       - id: results
         source: "#score/results"
+      - id: private_annotations
+        default: ["PSNR_mean", "PSNR_sd"]
     out: [finished]
 
   add_score_annots:
