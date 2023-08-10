@@ -105,8 +105,10 @@ def main():
                .drop(["count", "min", "max"]))
     results = pd.concat([results, metrics])
 
-    # CSV file of scores for all scans.
-    results.to_csv("all_scores.csv")
+    # CSV file of scores for all scans, hiding the automatic PSNR score 
+    # ('PSNR') and renaming the fixed PSNR ('PSNR_01') to PSNR.
+    # ^^^ requested by the challenge organizers
+    (results.drop('PSNR', axis=1).rename({'PSNR_01':'PSNR'}, axis=1).to_csv("all_scores.csv"))
     syn = synapseclient.Synapse(configPath=args.synapse_config)
     syn.login(silent=True)
     csv = synapseclient.File("all_scores.csv", parent=args.parent_id)
