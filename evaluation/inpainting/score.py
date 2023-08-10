@@ -57,13 +57,14 @@ def calculate_metrics(result, mask, gold):
     t1n = torch.Tensor(t1n_img.get_fdata()).unsqueeze(0).unsqueeze(0)
 
     # Compute metrics
-    mse, psnr, ssim = evaluation_utils.compute_metrics(
+    mse, psnr, psnr_01, ssim = evaluation_utils.compute_metrics(
         gt_image=t1n,
         prediction=pred,
         mask=mask)
     return pd.DataFrame({
         'MSE': [mse],
         'PSNR': [psnr],
+        'PSNR_01': [psnr_01],
         'SSIM': [ssim]
     })
 
@@ -117,11 +118,13 @@ def main():
                     .loc["mean"]
                     .rename({'MSE': "MSE_mean",
                              'PSNR': "PSNR_mean",
+                             'PSNR_01': "PSNR_01_mean",
                              'SSIM': "SSIM_mean"}),
                     **results
                     .loc["std"]
                     .rename({'MSE': "MSE_sd",
                              'PSNR': "PSNR_sd",
+                             'PSNR_01': "PSNR_sd",
                              'SSIM': "SSIM_sd"}),
                     "cases_evaluated": cases_evaluated,
                     "submission_scores": csv.id,
