@@ -60,6 +60,7 @@ requirements:
           else:
             message.append(f"Each scan's individual scores are available here: https://www.synapse.org/#!Synapse:{csv_id}")
           message.append("\n\nSincerely,\nChallenge Administrator")
+          message.replace("PSNR_01", "PSNR") # to not confuse inpainting participants
           syn.sendMessage(
               userIds=[participantid],
               messageSubject=subject,
