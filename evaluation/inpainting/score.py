@@ -124,7 +124,7 @@ def main():
                     .loc["std"]
                     .rename({'MSE': "MSE_sd",
                              'PSNR': "PSNR_sd",
-                             'PSNR_01': "PSNR_sd",
+                             'PSNR_01': "PSNR_01_sd",
                              'SSIM': "SSIM_sd"}),
                     "cases_evaluated": cases_evaluated,
                     "submission_scores": csv.id,
