@@ -9,6 +9,8 @@ if [[ $(file -b --mime-type $1) == 'application/zip' ]]; then
     unzip -jq "$1" -d "pred"
 elif [[ $(file -b --mime-type $1) == 'application/gzip' ]]; then
     tar   -xf "$1" -C "pred" --transform='s/.*\///'
+elif [[ $(file -b --mime-type $1) == 'application/x-tar' ]]; then
+    tar   -xf "$1" -C "pred" --transform='s/.*\///'
 fi
 
 for f in pred/*.nii.gz
