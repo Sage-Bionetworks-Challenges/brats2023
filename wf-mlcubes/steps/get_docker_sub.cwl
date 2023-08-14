@@ -51,6 +51,8 @@ inputs:
   type: string
 - id: evaluation_id
   type: string
+- id: previous_annotation_finished
+  type: boolean?
 
 outputs:
 - id: results

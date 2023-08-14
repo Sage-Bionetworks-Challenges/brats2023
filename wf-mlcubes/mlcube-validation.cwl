@@ -64,7 +64,7 @@ steps:
       - id: results
 
   unzip_tarball:
-    doc: Unzip MLCube config tarball, and upload file(s) to Synapse.
+    doc: Unzip MLCube config tarball, then upload file(s) to Synapse.
     run: steps/extract_config.cwl
     in:
       - id: input_file
@@ -78,8 +78,14 @@ steps:
       - id: parameters
       - id: addtional_files
 
+  check_unzip_results:
+    doc: Ensure that at least MLCube yaml file is uploaded to Synapse.
+    run: steps/validate_mlcube_config.cwl
+    in:
+      - id: mlcube
+        source: "unzip_tarball/mlcube"
+    out: [finished]
 
-  
   get_corresponding_docker:
     doc: Check that tarball is unique and contains all necessary scripts/files
     run: steps/get_docker_sub.cwl
@@ -94,6 +100,8 @@ steps:
         valueFrom: "syn52146382"
       - id: evaluation_id
         valueFrom: "9615387"
+      - id: previous_annotation_finished
+        source: "#check_unzip_results/finished"
     out:
       - id: results
       - id: status
