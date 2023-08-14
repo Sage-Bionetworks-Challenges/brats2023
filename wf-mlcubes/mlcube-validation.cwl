@@ -65,7 +65,7 @@ steps:
 
   unzip_tarball:
     doc: Unzip MLCube config tarball, then upload file(s) to Synapse.
-    run: steps/extract_config.cwl
+    run: ../shared/extract_config.cwl
     in:
       - id: input_file
         source: "#download_tarball/filepath"
@@ -75,8 +75,7 @@ steps:
         source: "#adminUploadSynId"
     out:
       - id: mlcube
-      - id: parameters
-      - id: addtional_files
+      - id: mlcube_file
 
   check_unzip_results:
     doc: Ensure that at least MLCube yaml file is uploaded to Synapse.

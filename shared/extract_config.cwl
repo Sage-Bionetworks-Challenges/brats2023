@@ -38,6 +38,7 @@ requirements:
               mlcube = synapseclient.File(member.name, parent=args.parent_id)
               mlcube = syn.store(mlcube)
               results['mlcube'] = "synapse:" + mlcube.id
+              os.rename(member.name, "mlcube.yaml")
             elif os.path.split(member.name)[1] == 'parameters.yaml':
               tar_ref.extract(member)
               parameters = synapseclient.File(member.name, parent=args.parent_id)
@@ -67,6 +68,10 @@ outputs:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['mlcube'])
     loadContents: true
+- id: mlcube_file
+  type: File
+  outputBinding:
+    glob: mlcube.yaml
 - id: parameters
   type: string
   outputBinding:
