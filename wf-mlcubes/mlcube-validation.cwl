@@ -62,6 +62,23 @@ steps:
       - id: entity_type
       - id: evaluation_id
       - id: results
+
+  unzip_tarball:
+    doc: Unzip MLCube config tarball, and upload file(s) to Synapse.
+    run: steps/extract_config.cwl
+    in:
+      - id: input_file
+        source: "#download_tarball/filepath"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: parent_id
+        source: "#adminUploadSynId"
+    out:
+      - id: mlcube
+      - id: parameters
+      - id: addtional_files
+
+
   
   get_corresponding_docker:
     doc: Check that tarball is unique and contains all necessary scripts/files
