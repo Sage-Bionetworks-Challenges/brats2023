@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
-class: CommandLineTool
+class: ExpressionTool
 label: Check mlcube yaml file
 doc: >
   Check whether `mlcube.yaml` has been uploaded for the submission (will have
