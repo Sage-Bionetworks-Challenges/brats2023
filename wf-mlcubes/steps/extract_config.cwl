@@ -37,17 +37,17 @@ requirements:
               tar_ref.extract(member)
               mlcube = synapseclient.File(member.name, parent=args.parent_id)
               mlcube = syn.store(mlcube)
-              results['mlcube'] = mlcube.id
+              results['mlcube'] = "synapse:" + mlcube.id
             elif os.path.split(member.name)[1] == 'parameters.yaml':
               tar_ref.extract(member)
               parameters = synapseclient.File(member.name, parent=args.parent_id)
               parameters = syn.store(parameters)
-              results['parameters'] = parameters.id
+              results['parameters'] = "synapse:" + parameters.id
             elif os.path.split(member.name)[1] == 'additional_files.tar.gz':
               tar_ref.extract(member)
               add = synapseclient.File(member.name, parent=args.parent_id)
               add = syn.store(add)
-              results['additional_files'] = add.id
+              results['additional_files'] = "synapse:" + add.id
       with open('results.json', 'w') as out:
         out.write(json.dumps(results))
 
