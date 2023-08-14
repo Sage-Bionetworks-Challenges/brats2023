@@ -122,7 +122,17 @@ steps:
       - id: entity_type
       - id: evaluation_id
       - id: results
- 
+
+  validate_mlcube:
+    doc: Run MLCube compatibility test for validation
+    run: steps/test_compability.cwl
+    in:
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: mlcube_file
+        source: "#unzip_tarball/mlcube_file"
+    out:
+      - id: results
 s:author:
 - class: s:Person
   s:identifier: https://orcid.org/0000-0002-5622-7998
