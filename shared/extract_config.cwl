@@ -74,17 +74,17 @@ outputs:
     outputEval: $(JSON.parse(self[0].contents)['mlcube'])
     loadContents: true
 - id: mlcube_file
-  type: File
+  type: File?
   outputBinding:
     glob: mlcube.yaml
 - id: parameters
-  type: string
+  type: string?
   outputBinding:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['parameters'])
     loadContents: true
 - id: addtional_files
-  type: string
+  type: string?
   outputBinding:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['additional_files'])
