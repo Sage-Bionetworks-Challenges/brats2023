@@ -74,8 +74,20 @@ steps:
       - id: parent_id
         source: "#adminUploadSynId"
     out:
+      - id: results
       - id: mlcube
-      - id: mlcube_file
+
+  send_tarball_results:
+    doc: Send email of the validation results to the submitter
+    run: steps/email_results.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: results
+        source: "#unzip_tarball/results"
+    out: [finished]
 
   check_unzip_results:
     doc: Ensure that at least MLCube yaml file is uploaded to Synapse.
@@ -83,6 +95,8 @@ steps:
     in:
       - id: mlcube
         source: "unzip_tarball/mlcube"
+      - id: previous_annotation_finished
+        source: "#send_tarball_results/finished"
     out: [finished]
 
   get_corresponding_docker:
@@ -123,36 +137,50 @@ steps:
       - id: evaluation_id
       - id: results
 
-  get_task_entities:
-    doc: Get parameters based on task number
-    run: steps/get_task.cwl
-    in:
-      - id: queue
-        source: "#download_tarball/evaluation_id"
-    out:
-      - id: dataset
-      - id: dataset_hash
-      - id: data_prep_mlcube
-      - id: metrics_mlcube
+  # get_task_entities:
+  #   doc: Get parameters based on task number
+  #   run: steps/get_task.cwl
+  #   in:
+  #     - id: queue
+  #       source: "#download_tarball/evaluation_id"
+  #   out:
+  #     - id: dataset
+  #     - id: dataset_hash
+  #     - id: data_prep_mlcube
+  #     - id: metrics_mlcube
 
-  validate_mlcube:
-    doc: Run MLCube compatibility test for validation
-    run: steps/test_compability.cwl
-    in:
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: mlcube_file
-        source: "#unzip_tarball/mlcube_file"
-      - id: dataset
-        source: "#get_task_entities/dataset"
-      - id: dataset_hash
-        source: "#get_task_entities/dataset_hash"
-      - id: data_prep_mlcube
-        source: "#get_task_entities/data_prep_mlcube"
-      - id: metrics_mlcube
-        source: "#get_task_entities/metrics_mlcube"
-    out:
-      - id: results
+  # validate_mlcube:
+  #   doc: Run MLCube compatibility test for validation
+  #   run: steps/test_compability.cwl
+  #   in:
+  #     - id: synapse_config
+  #       source: "#synapseConfig"
+  #     - id: mlcube_file
+  #       source: "#unzip_tarball/mlcube_file"
+  #     - id: dataset
+  #       source: "#get_task_entities/dataset"
+  #     - id: dataset_hash
+  #       source: "#get_task_entities/dataset_hash"
+  #     - id: data_prep_mlcube
+  #       source: "#get_task_entities/data_prep_mlcube"
+  #     - id: metrics_mlcube
+  #       source: "#get_task_entities/metrics_mlcube"
+  #   out:
+  #     - id: results
+
+  # send_results:
+  #   doc: Check the results of the compatibility test and send to submitter
+  #   run: steps/check_results.cwl
+  #   in:
+  #     - id: submissionid
+  #       source: "#submissionId"
+  #     - id: synapse_config
+  #       source: "#synapseConfig"
+  #     - id: results
+  #       source: "#validate_mlcube/results"
+  #   out:
+  #     - id: status
+ 
 s:author:
 - class: s:Person
   s:identifier: https://orcid.org/0000-0002-5622-7998
