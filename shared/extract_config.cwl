@@ -29,6 +29,7 @@ requirements:
         'mlcube': "",
         'parameters': "",
         'additional_files': ""
+        'submission_status': ""
       }
       if tarfile.is_tarfile(args.input_file):
         with tarfile.open(args.input_file) as tar_ref:
@@ -39,6 +40,7 @@ requirements:
               mlcube = syn.store(mlcube)
               results['mlcube'] = "synapse:" + mlcube.id
               os.rename(member.name, "mlcube.yaml")
+              results['submission_status'] = "MLCUBE_CONFIG_ACCEPTED"
             elif os.path.split(member.name)[1] in ['parameters.yaml', 'parameters.yml']:
               tar_ref.extract(member)
               parameters = synapseclient.File(member.name, parent=args.parent_id)
