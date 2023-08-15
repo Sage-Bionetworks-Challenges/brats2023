@@ -81,7 +81,7 @@ requirements:
 
 inputs:
 - id: submissionid
-  type: int
+  type: string
 - id: synapse_config
   type: File
 - id: mlcube_id
