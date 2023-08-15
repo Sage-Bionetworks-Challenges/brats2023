@@ -1,7 +1,6 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-
 label: Send email with results
 
 requirements:
@@ -39,20 +38,26 @@ requirements:
       if args.docker_id == 'INVALID':
         subject += "invalid"
         message.append(
-          "<b>Your MLCube submission is invalid.</b> "
+          f"<b>Your MLCube submission (ID {args.submissionid}) is invalid.</b> "
           "We could not find a Docker image associated with your MLCube "
           "config tarball. Please try again, and remember to use the "
-          "same 'Submission Name' for your MLCube tarball and MLCube "
+          "<u>same submission name</u> for your MLCube tarball and MLCube "
           "Docker image.\n\n"
         )
       else:
         subject += "accepted"
         message.append(
-          "<b>Your MLCube has been accepted.</b> "
-          "Starting Aug. 22nd, the Challenge Organizers will begin running "
-          "submitted MLCubes against the unseen testing data - results will "
-          "be announced at a later time.\n\n"
           "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
+          "<b>Your MLCube has been accepted!</b> 🎉 "
+          "Starting next week on Aug. 22nd, we will begin running the "
+          "submitted MLCubes against the unseen testing data. Results "
+          "will be announced at a later time.\n\n"
+          "Please note that <b>we did NOT run a compatibility test of your "
+          "MLCube</b>, so your submission may be at risk to failing next week. "
+          "If you haven't yet, we highly encourage you to "
+          "<a href='https://www.synapse.org/#!Synapse:syn51156910/wiki/622674'>"
+          "locally test your MLCube's compatibility</a> against the sample "
+          "benchmarks to catch possible errors. You may submit again if needed.\n\n"
         )
       message.append(
         "Sincerely,\n"
@@ -62,7 +67,6 @@ requirements:
         userIds=[participantid],
         messageSubject=subject,
         messageBody="".join(message))
-
 
 inputs:
 - id: submissionid
