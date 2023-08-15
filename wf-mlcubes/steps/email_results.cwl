@@ -87,7 +87,7 @@ inputs:
 - id: mlcube_id
   type: string?
 - id: docker_id
-  type: string?
+  type: int?
 
 outputs:
 - id: finished
