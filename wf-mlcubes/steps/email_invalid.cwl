@@ -2,7 +2,7 @@
 cwlVersion: v1.0
 class: CommandLineTool
 
-label: Send email with results
+label: Send email if tarball is not found
 
 requirements:
 - class: InlineJavascriptRequirement
@@ -18,7 +18,7 @@ requirements:
       parser = argparse.ArgumentParser()
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
       parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
-      parser.add_argument("-d", "--docker_id", help="submission ID for MLCube Docker")
+      parser.add_argument("-m", "--mlcube_id", help="synID for MLCube yaml file")
 
       args = parser.parse_args()
       syn = synapseclient.Synapse(configPath=args.synapse_config)
@@ -33,34 +33,23 @@ requirements:
         name = syn.getUserProfile(participantid)['userName']
       evaluation = syn.getEvaluation(sub.evaluationId)
 
-      subject = f"Submission to '{evaluation.name}' "
-      message = [f"Hello {name},\n\n"]
-      if args.docker_id:
-        subject += "accepted"
-        message.append(
-          "<b>Your MLCube has been accepted.</b> "
-          "Starting Aug. 22nd, the Challenge Organizers will begin running "
-          "submitted MLCubes against the unseen testing data - results will "
-          "be announced at a later time.\n\n"
-          "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
-        )
+      if not args.mlcube_id:
+        subject = f"Submission to '{evaluation.name}' invalid"
+        message = [
+            f"Hello {name},\n\n",
+            "<b>Your MLCube tarball is invalid.</b> ",
+            "Double-check that the submitted tarball has at least a ",
+            "`mlcube.yaml` file and please try again.\n\n",
+            "Sincerely,\n",
+            "BraTS 2023 Organizers"
+          ]
+        syn.sendMessage(
+          userIds=[participantid],
+          messageSubject=subject,
+          messageBody="".join(message))
       else:
-        subject += "invalid"
-        message.append(
-          "<b>Your MLCube submission is invalid.</b> "
-          "We could not find a Docker image associated with your MLCube "
-          "config tarball. Please try again, and remember to use the "
-          "same 'Submission Name' for your MLCube tarball and MLCube "
-          "Docker image.\n\n"
-        )
-      message.append(
-        "Sincerely,\n"
-        "BraTS 2023 Organizers"
-      )
-      syn.sendMessage(
-        userIds=[participantid],
-        messageSubject=subject,
-        messageBody="".join(message))
+        subject = f"Submission to '{evaluation.name}' "
+        message = [f"Hello {name},\n\n"]
 
 
 inputs:
@@ -68,8 +57,8 @@ inputs:
   type: int
 - id: synapse_config
   type: File
-- id: docker_id
-  type: int
+- id: mlcube_id
+  type: string
 
 outputs:
 - id: finished
@@ -84,8 +73,8 @@ arguments:
   valueFrom: $(inputs.submissionid)
 - prefix: -c
   valueFrom: $(inputs.synapse_config.path)
-- prefix: -d
-  valueFrom: $(inputs.docker_id)
+- prefix: -m
+  valueFrom: $(inputs.mlcube_id)
 
 hints:
   DockerRequirement:

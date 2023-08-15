@@ -77,8 +77,8 @@ steps:
       - id: mlcube
 
   send_tarball_results:
-    doc: Send email of the validation results to the submitter
-    run: steps/email_results.cwl
+    doc: Send email if submission is missing `mlcube.yaml`
+    run: steps/email_invalid.cwl
     in:
       - id: submissionid
         source: "#submissionId"
@@ -137,7 +137,7 @@ steps:
       - id: docker_id
   
   send_docker_results:
-    doc: Send email of the validation results to the submitter
+    doc: Send email whether corresponding Docker image can be found
     run: steps/email_results.cwl
     in:
       - id: submissionid
@@ -181,7 +181,7 @@ steps:
 
   update_tarball_sub_annots:
     doc: >
-      Annotate Docker submission with MLCube config files
+      Update tarball submission with MLCube config files
     run: |-
       https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
     in:
