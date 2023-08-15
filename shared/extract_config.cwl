@@ -28,7 +28,7 @@ requirements:
       results = {
         'mlcube': "",
         'parameters': "",
-        'additional_files': ""
+        'additional_files': "",
         'submission_status': ""
       }
       if tarfile.is_tarfile(args.input_file):
