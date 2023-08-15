@@ -137,6 +137,26 @@ steps:
       - id: evaluation_id
       - id: results
 
+  annotate_with_config:
+    doc: >
+      Annotate Docker submission with MLCube config files
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#get_corresponding_docker/docker_id"
+      - id: annotation_values
+        source: "#unzip_tarball/results"
+      - id: to_public
+        default: true
+      - id: force
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: previous_annotation_finished
+        source: "#check_unzip_results/finished"
+    out: [finished]
+
   # get_task_entities:
   #   doc: Get parameters based on task number
   #   run: steps/get_task.cwl
