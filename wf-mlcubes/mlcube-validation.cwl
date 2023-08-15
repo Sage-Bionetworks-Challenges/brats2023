@@ -165,16 +165,16 @@ steps:
         source: "#send_docker_results/finished"
     out: [finished]
 
-  download_docker:
-    doc: Download MLCube Docker submission
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
-    in:
-      - id: submissionid
-        source: "#get_corresponding_docker/docker_id"
-      - id: synapse_config
-        source: "#synapseConfig"
-    out: []
+  # download_docker:
+  #   doc: Download MLCube Docker submission
+  #   run: |-
+  #     https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
+  #   in:
+  #     - id: submissionid
+  #       source: "#get_corresponding_docker/docker_id"
+  #     - id: synapse_config
+  #       source: "#synapseConfig"
+  #   out: []
 
   annotate_docker_sub:
     doc: >
