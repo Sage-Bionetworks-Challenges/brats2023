@@ -88,25 +88,6 @@ steps:
         source: "#unzip_tarball/mlcube"
     out: [finished]
 
-  annotate_tarball_sub:
-    doc: Annotate tarball submission
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: annotation_values
-        source: "#unzip_tarball/results"
-      - id: to_public
-        default: true
-      - id: force
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: previous_annotation_finished
-        source: "#send_tarball_results/finished"
-    out: [finished]
-
   check_unzip_results:
     doc: Ensure that at least MLCube yaml file is uploaded to Synapse.
     run: steps/validate_mlcube_config.cwl
@@ -159,8 +140,6 @@ steps:
     in:
       - id: status
         source: "#get_corresponding_docker/status"
-      - id: previous_annotation_finished
-        source: "#annotate_tarball_sub/finished"
       - id: previous_email_finished
         source: "#send_docker_results/finished"
     out: [finished]
