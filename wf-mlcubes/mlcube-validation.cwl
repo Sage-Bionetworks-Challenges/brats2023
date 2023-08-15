@@ -123,6 +123,18 @@ steps:
       - id: evaluation_id
       - id: results
 
+  get_task_entities:
+    doc: Get parameters based on task number
+    run: steps/get_task.cwl
+    in:
+      - id: queue
+        source: "#download_tarball/evaluation_id"
+    out:
+      - id: dataset
+      - id: dataset_hash
+      - id: data_prep_mlcube
+      - id: metrics_mlcube
+
   validate_mlcube:
     doc: Run MLCube compatibility test for validation
     run: steps/test_compability.cwl
@@ -131,6 +143,14 @@ steps:
         source: "#synapseConfig"
       - id: mlcube_file
         source: "#unzip_tarball/mlcube_file"
+      - id: dataset
+        source: "#get_task_entities/dataset"
+      - id: dataset_hash
+        source: "#get_task_entities/dataset_hash"
+      - id: data_prep_mlcube
+        source: "#get_task_entities/data_prep_mlcube"
+      - id: metrics_mlcube
+        source: "#get_task_entities/metrics_mlcube"
     out:
       - id: results
 s:author:

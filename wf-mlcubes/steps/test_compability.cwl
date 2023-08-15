@@ -1,13 +1,21 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: CommandLineTool
-label: Get MLCube config files then upload to Synapse
+label: Run MLCube compatibility test
 
 inputs:
 - id: mlcube_file
   type: File
 - id: synapse_config
   type: File
+- id: dataset
+  type: string
+- id: dataset_hash
+  type: string
+- id: data_prep_mlcube
+  type: string
+- id: metrics_mlcube
+  type: string
 
 outputs:
 - id: results
@@ -16,15 +24,15 @@ outputs:
 baseCommand: [medperf, test, run, --offline, --no-cache]
 arguments:
 - prefix: --demo_dataset_url
-  valueFrom: "synapse:syn52276402"
+  valueFrom: $(inputs.dataset)
 - prefix: --demo_dataset_hash
-  valueFrom: "16526543134396b0c8fd0f0428be7c96f2142a66"
+  valueFrom: $(inputs.dataset_hash)
 - prefix: -m
   valueFrom: $(inputs.mlcube_file)
 - prefix: -p
-  valueFrom: "/Users/vchung/Desktop/brats2023/test_mlcubes/prep_segmentation"
+  valueFrom: $(inputs.data_prep_mlcube)
 - prefix: -e
-  valueFrom: "/Users/vchung/Desktop/brats2023/test_mlcubes/eval_segmentation"
+  valueFrom: $(inputs.metrics_mlcube)
 stdout: results.txt
 
 # hints:
