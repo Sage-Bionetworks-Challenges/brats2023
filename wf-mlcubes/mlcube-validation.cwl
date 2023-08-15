@@ -130,6 +130,26 @@ steps:
         source: "#get_corresponding_docker/status"
     out: [finished]
 
+  update_tarball_sub_annots:
+    doc: >
+      Update tarball submission with MLCube config files
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#get_corresponding_docker/results"
+      - id: to_public
+        default: true
+      - id: force
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: previous_annotation_finished
+        source: "#annotate_docker_sub/finished"
+    out: [finished]
+
   check_docker_status:
     doc: >
       Check the validation status of the submission; if 'INVALID', throw an
@@ -173,26 +193,6 @@ steps:
         source: "#synapseConfig"
       - id: previous_annotation_finished
         source: "#check_docker_status/finished"
-    out: [finished]
-
-  update_tarball_sub_annots:
-    doc: >
-      Update tarball submission with MLCube config files
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#submissionId"
-      - id: annotation_values
-        source: "#get_corresponding_docker/results"
-      - id: to_public
-        default: true
-      - id: force
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: previous_annotation_finished
-        source: "#annotate_docker_sub/finished"
     out: [finished]
 
   # get_task_entities:
