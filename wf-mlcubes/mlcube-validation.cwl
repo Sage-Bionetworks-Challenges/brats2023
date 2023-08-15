@@ -85,8 +85,8 @@ steps:
         source: "#submissionId"
       - id: synapse_config
         source: "#synapseConfig"
-      - id: results
-        source: "#unzip_tarball/results"
+      - id: mlcube_id
+        source: "#unzip_tarball/mlcube"
     out: [finished]
 
   check_unzip_results:
@@ -100,11 +100,10 @@ steps:
     out: [finished]
 
   get_corresponding_docker:
-    doc: Check that tarball is unique and contains all necessary scripts/files
+    doc: >
+      Check that tarball is unique and contains all necessary scripts/files
     run: steps/get_docker_sub.cwl
     in:
-      - id: input_file
-        source: "#download_tarball/filepath"
       - id: submissionid
         source: "#submissionId"
       - id: synapse_config
@@ -112,14 +111,24 @@ steps:
       - id: submission_view
         valueFrom: "syn52146382"
       - id: evaluation_id
-        valueFrom: "9615387"
+        default: 9615387
       - id: previous_annotation_finished
         source: "#check_unzip_results/finished"
     out:
-      - id: results
       - id: status
-      - id: invalid_reasons
       - id: docker_id
+  
+  send_docker_results:
+    doc: Send email of the validation results to the submitter
+    run: steps/email_results.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: docker_status
+        source: "#get_corresponding_docker/status"
+    out: [finished]
 
   download_docker:
     doc: Download MLCube Docker submission
@@ -130,12 +139,7 @@ steps:
         source: "#get_corresponding_docker/docker_id"
       - id: synapse_config
         source: "#synapseConfig"
-    out:
-      - id: filepath
-      - id: entity_id
-      - id: entity_type
-      - id: evaluation_id
-      - id: results
+    out: []
 
   annotate_with_config:
     doc: >

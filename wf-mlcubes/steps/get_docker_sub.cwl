@@ -14,14 +14,15 @@ requirements:
       import argparse
       import json
       import os
+
       parser = argparse.ArgumentParser()
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
       parser.add_argument("-e", "--evaluationid", required=True, help="Evaluation ID")
       parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
       parser.add_argument("-v", "--submission_view", required=True, help="synID of submission view")
       parser.add_argument("-r", "--results", required=True, help="Resulting scores")
-
       args = parser.parse_args()
+
       syn = synapseclient.Synapse(configPath=args.synapse_config)
       syn.login()
 
@@ -31,18 +32,20 @@ requirements:
       
       query = (f"SELECT id FROM {args.submission_view} "
                f"WHERE name = '{name}' "
-               f"id <> {args.submissionid} "
                f"AND evaluationid = {args.evaluationid} "
                f"AND submitterid = {submitter} ")
       res = syn.tableQuery(query).asDataFrame()["id"]
+      docker_id = ""
       if len(res) == 1:
-        docker_id = res.iloc[0]["id"]
-      else:
-        docker_id = "error"
+        docker_id = str(res.iloc[0])
+
+      with open('results.json', 'w') as out:
+        out.write(json.dumps({
+          'docker_id': docker_id,
+          'submission_status': "MLCUBE_DOCKER_FOUND" if docker_id else "INVALID"
+        }))
 
 inputs:
-- id: input_file
-  type: File
 - id: submissionid
   type: int
 - id: synapse_config
@@ -50,7 +53,7 @@ inputs:
 - id: submission_view
   type: string
 - id: evaluation_id
-  type: string
+  type: int
 - id: previous_annotation_finished
   type: boolean?
 
@@ -64,12 +67,6 @@ outputs:
   outputBinding:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['submission_status'])
-    loadContents: true
-- id: invalid_reasons
-  type: string
-  outputBinding:
-    glob: results.json
-    outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
     loadContents: true
 - id: docker_id
   type: string
@@ -85,7 +82,7 @@ arguments:
   valueFrom: $(inputs.submissionid)
 - prefix: -c
   valueFrom: $(inputs.synapse_config.path)
-- prefix: -v1
+- prefix: -v
   valueFrom: $(inputs.submission_view)
 - prefix: -r
   valueFrom: results.json
