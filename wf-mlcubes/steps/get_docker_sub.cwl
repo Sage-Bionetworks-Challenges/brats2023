@@ -64,7 +64,7 @@ outputs:
   outputBinding:
     glob: results.json
 - id: status
-  type: int
+  type: string
   outputBinding:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['submission_status'])
