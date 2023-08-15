@@ -31,8 +31,8 @@ requirements:
       submitter = sub.get("teamId") or sub.get("userId")
       
       query = (f"SELECT id FROM {args.submission_view} "
-               f"WHERE name = '{name}' "
-               f"AND evaluationid = {args.evaluationid} "
+               f"WHERE evaluationid = {args.evaluationid} "
+               f"AND name = '{name}' "
                f"AND submission_status <> 'ACCEPTED' "
                f"AND submitterid = {submitter} ")
       res = syn.tableQuery(query).asDataFrame()["id"]

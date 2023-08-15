@@ -35,16 +35,8 @@ requirements:
 
       subject = f"Submission to '{evaluation.name}' "
       message = [f"Hello {name},\n\n"]
-      if args.docker_id:
-        subject += "accepted"
-        message.append(
-          "<b>Your MLCube has been accepted.</b> "
-          "Starting Aug. 22nd, the Challenge Organizers will begin running "
-          "submitted MLCubes against the unseen testing data - results will "
-          "be announced at a later time.\n\n"
-          "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
-        )
-      else:
+      print(args.docker_id)
+      if args.docker_id == 'INVALID':
         subject += "invalid"
         message.append(
           "<b>Your MLCube submission is invalid.</b> "
@@ -52,6 +44,15 @@ requirements:
           "config tarball. Please try again, and remember to use the "
           "same 'Submission Name' for your MLCube tarball and MLCube "
           "Docker image.\n\n"
+        )
+      else:
+        subject += "accepted"
+        message.append(
+          "<b>Your MLCube has been accepted.</b> "
+          "Starting Aug. 22nd, the Challenge Organizers will begin running "
+          "submitted MLCubes against the unseen testing data - results will "
+          "be announced at a later time.\n\n"
+          "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
         )
       message.append(
         "Sincerely,\n"
@@ -68,8 +69,8 @@ inputs:
   type: int
 - id: synapse_config
   type: File
-- id: docker_id
-  type: int
+- id: status
+  type: string
 
 outputs:
 - id: finished
@@ -85,7 +86,7 @@ arguments:
 - prefix: -c
   valueFrom: $(inputs.synapse_config.path)
 - prefix: -d
-  valueFrom: $(inputs.docker_id)
+  valueFrom: $(inputs.status)
 
 hints:
   DockerRequirement:

@@ -145,8 +145,8 @@ steps:
         source: "#submissionId"
       - id: synapse_config
         source: "#synapseConfig"
-      - id: docker_id
-        source: "#get_corresponding_docker/docker_id"
+      - id: status
+        source: "#get_corresponding_docker/status"
     out: [finished]
 
   check_docker_status:
@@ -193,7 +193,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#annotate_tarball_sub/finished"
+        source: "#check_docker_status/finished"
     out: [finished]
 
   update_tarball_sub_annots:
