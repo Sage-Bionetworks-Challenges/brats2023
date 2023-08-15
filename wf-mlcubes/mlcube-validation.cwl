@@ -1,7 +1,6 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: Workflow
-
 label: BraTS 2023 - MLCube workflow
 
 requirements:
@@ -134,7 +133,7 @@ steps:
       - id: previous_annotation_finished
         source: "#check_unzip_results/finished"
     out:
-      - id: status
+      - id: results
       - id: docker_id
   
   send_docker_results:
@@ -146,7 +145,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: docker_id
-        source: "#get_corresponding_docker/status"
+        source: "#get_corresponding_docker/docker_id"
     out: [finished]
 
   download_docker:
@@ -177,7 +176,27 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#check_unzip_results/finished"
+        source: "#annotate_tarball_sub/finished"
+    out: [finished]
+
+  update_tarball_sub_annots:
+    doc: >
+      Annotate Docker submission with MLCube config files
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#get_corresponding_docker/results"
+      - id: to_public
+        default: true
+      - id: force
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+      - id: previous_annotation_finished
+        source: "#annotate_docker_sub/finished"
     out: [finished]
 
   # get_task_entities:
