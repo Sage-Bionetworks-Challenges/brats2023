@@ -134,6 +134,7 @@ steps:
         source: "#check_unzip_results/finished"
     out:
       - id: results
+      - id: status
       - id: docker_id
   
   send_docker_results:
@@ -146,6 +147,22 @@ steps:
         source: "#synapseConfig"
       - id: docker_id
         source: "#get_corresponding_docker/docker_id"
+    out: [finished]
+
+  check_docker_status:
+    doc: >
+      Check the validation status of the submission; if 'INVALID', throw an
+      exception to stop the workflow - this will prevent the attempt of
+      scoring invalid predictions file (which will then result in errors)
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/check_status.cwl
+    in:
+      - id: status
+        source: "#get_corresponding_docker/status"
+      - id: previous_annotation_finished
+        source: "#annotate_tarball_sub/finished"
+      - id: previous_email_finished
+        source: "#send_docker_results/finished"
     out: [finished]
 
   download_docker:

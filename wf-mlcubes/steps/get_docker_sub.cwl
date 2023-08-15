@@ -63,6 +63,12 @@ outputs:
   type: File
   outputBinding:
     glob: results.json
+- id: status
+  type: int
+  outputBinding:
+    glob: results.json
+    outputEval: $(JSON.parse(self[0].contents)['submission_status'])
+    loadContents: true 
 - id: docker_id
   type: int
   outputBinding:
