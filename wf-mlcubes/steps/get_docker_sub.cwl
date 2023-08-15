@@ -41,7 +41,7 @@ requirements:
 
       with open('results.json', 'w') as out:
         out.write(json.dumps({
-          'docker_id': docker_id,
+          'docker_id': int(docker_id),
           'submission_status': "MLCUBE_DOCKER_FOUND" if docker_id else "INVALID"
         }))
 
@@ -62,14 +62,8 @@ outputs:
   type: File
   outputBinding:
     glob: results.json
-- id: status
-  type: string
-  outputBinding:
-    glob: results.json
-    outputEval: $(JSON.parse(self[0].contents)['submission_status'])
-    loadContents: true
 - id: docker_id
-  type: string
+  type: int
   outputBinding:
     glob: results.json
     outputEval: $(JSON.parse(self[0].contents)['docker_id'])
