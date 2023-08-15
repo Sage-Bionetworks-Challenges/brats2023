@@ -33,13 +33,13 @@ requirements:
       if tarfile.is_tarfile(args.input_file):
         with tarfile.open(args.input_file) as tar_ref:
           for member in tar_ref:
-            if os.path.split(member.name)[1] == 'mlcube.yaml':
+            if os.path.split(member.name)[1] in ['mlcube.yaml', 'mlcube.yml']:
               tar_ref.extract(member)
               mlcube = synapseclient.File(member.name, parent=args.parent_id)
               mlcube = syn.store(mlcube)
               results['mlcube'] = "synapse:" + mlcube.id
               os.rename(member.name, "mlcube.yaml")
-            elif os.path.split(member.name)[1] == 'parameters.yaml':
+            elif os.path.split(member.name)[1] in ['parameters.yaml', 'parameters.yml']:
               tar_ref.extract(member)
               parameters = synapseclient.File(member.name, parent=args.parent_id)
               parameters = syn.store(parameters)
@@ -52,7 +52,6 @@ requirements:
       with open('results.json', 'w') as out:
         out.write(json.dumps(results))
 
-
 inputs:
 - id: input_file
   type: File
@@ -62,6 +61,10 @@ inputs:
   type: File
 
 outputs:
+- id: results
+  type: File
+  outputBinding:
+    glob: results.json
 - id: mlcube
   type: string
   outputBinding:
