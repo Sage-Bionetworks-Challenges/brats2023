@@ -130,7 +130,7 @@ steps:
         source: "#get_corresponding_docker/status"
     out: [finished]
 
-  update_tarball_sub_annots:
+  add_tarball_annots:
     doc: >
       Update tarball submission with MLCube config files
     run: |-
@@ -147,7 +147,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#annotate_docker_sub/finished"
+        source: "#send_docker_results/finished"
     out: [finished]
 
   check_docker_status:
@@ -192,7 +192,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#check_docker_status/finished"
+        source: "#add_tarball_annots/finished"
     out: [finished]
 
   # get_task_entities:

@@ -37,9 +37,9 @@ requirements:
         subject = f"Submission to '{evaluation.name}' invalid"
         message = [
             f"Hello {name},\n\n",
-            "<b>Your MLCube tarball is invalid.</b> ",
-            "Double-check that the submitted tarball has at least a ",
-            "`mlcube.yaml` file and please try again.\n\n",
+            f"<b>Your MLCube tarball submission (ID: {args.submissionid}) "
+            "is invalid.</b> Double-check that the submitted tarball has at "
+            "least a `mlcube.yaml` file and please try again.\n\n",
             "Sincerely,\n",
             "BraTS 2023 Organizers"
           ]
