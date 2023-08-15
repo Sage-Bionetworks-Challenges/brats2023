@@ -10,8 +10,10 @@ requirements:
 - class: InlineJavascriptRequirement
 
 inputs:
-  - id: mlcube
-    type: string
+- id: mlcube
+  type: string
+- id: previous_annotation_finished
+  type: boolean?
 
 outputs:
 - id: finished
