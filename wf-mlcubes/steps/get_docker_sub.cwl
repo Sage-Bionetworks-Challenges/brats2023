@@ -33,7 +33,7 @@ requirements:
       query = (f"SELECT id FROM {args.submission_view} "
                f"WHERE evaluationid = {args.evaluationid} "
                f"AND name = '{name}' "
-               f"AND submission_status <> 'ACCEPTED' "
+               f"AND submission_status IS NULL "
                f"AND submitterid = {submitter} ")
       res = syn.tableQuery(query).asDataFrame()["id"]
       docker_id = 0
