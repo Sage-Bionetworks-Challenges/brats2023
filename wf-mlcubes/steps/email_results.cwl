@@ -48,7 +48,7 @@ requirements:
         subject += "accepted"
         message.append(
           "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
-          "<b>Your MLCube has been accepted!</b> 🎉 "
+          f"<b>Your MLCube submission (ID: {args.submissionid})has been accepted!</b> 🎉 "
           "Starting next week on Aug. 22nd, we will begin running the "
           "submitted MLCubes against the unseen testing data. Results "
           "will be announced at a later time.\n\n"
