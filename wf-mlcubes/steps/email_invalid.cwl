@@ -47,10 +47,6 @@ requirements:
           userIds=[participantid],
           messageSubject=subject,
           messageBody="".join(message))
-      else:
-        subject = f"Submission to '{evaluation.name}' "
-        message = [f"Hello {name},\n\n"]
-
 
 inputs:
 - id: submissionid

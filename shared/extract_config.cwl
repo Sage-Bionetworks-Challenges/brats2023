@@ -53,6 +53,10 @@ requirements:
               results['additional_files'] = "synapse:" + add.id
       with open('results.json', 'w') as out:
         out.write(json.dumps(results))
+      with open('status.json', 'w') as out:
+        out.write(json.dumps({
+          'submission_status': "ACCEPTED" if results.get('mlcube') else "INVALID"
+        }))
 
 inputs:
 - id: input_file
@@ -63,6 +67,10 @@ inputs:
   type: File
 
 outputs:
+- id: status
+  type: File
+  outputBinding:
+    glob: status.json
 - id: results
   type: File
   outputBinding:

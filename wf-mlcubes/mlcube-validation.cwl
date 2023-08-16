@@ -75,6 +75,25 @@ steps:
     out:
       - id: results
       - id: mlcube
+      - id: status
+
+  add_tarball_annots:
+    doc: >
+      Update tarball submission with MLCube config files
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: "#submissionId"
+      - id: annotation_values
+        source: "#unzip_tarball/status"
+      - id: to_public
+        default: true
+      - id: force
+        default: true
+      - id: synapse_config
+        source: "#synapseConfig"
+    out: [finished]
 
   send_tarball_results:
     doc: Send email if submission is missing `mlcube.yaml`
@@ -130,7 +149,7 @@ steps:
         source: "#get_corresponding_docker/status"
     out: [finished]
 
-  add_tarball_annots:
+  update_tarball_annots:
     doc: >
       Update tarball submission with MLCube config files
     run: |-
@@ -147,7 +166,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#send_docker_results/finished"
+        source: "#add_tarball_annots/finished"
     out: [finished]
 
   check_docker_status:
@@ -192,7 +211,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: previous_annotation_finished
-        source: "#add_tarball_annots/finished"
+        source: "#update_tarball_annots/finished"
     out: [finished]
 
   # get_task_entities:
