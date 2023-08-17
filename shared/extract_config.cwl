@@ -43,14 +43,16 @@ requirements:
               results['submission_status'] = "ACCEPTED"
             elif os.path.split(member.name)[1] in ['parameters.yaml', 'parameters.yml']:
               tar_ref.extract(member)
-              parameters = synapseclient.File(member.name, parent=args.parent_id)
-              parameters = syn.store(parameters)
-              results['parameters'] = "synapse:" + parameters.id
+              if os.stat(member).st_size:
+                parameters = synapseclient.File(member.name, parent=args.parent_id)
+                parameters = syn.store(parameters)
+                results['parameters'] = "synapse:" + parameters.id
             elif os.path.split(member.name)[1] == 'additional_files.tar.gz':
               tar_ref.extract(member)
-              add = synapseclient.File(member.name, parent=args.parent_id)
-              add = syn.store(add)
-              results['additional_files'] = "synapse:" + add.id
+              if os.stat(member).st_size:
+                add = synapseclient.File(member.name, parent=args.parent_id)
+                add = syn.store(add)
+                results['additional_files'] = "synapse:" + add.id
       with open('results.json', 'w') as out:
         out.write(json.dumps(results))
       with open('status.json', 'w') as out:
