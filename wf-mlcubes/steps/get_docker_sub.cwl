@@ -14,6 +14,7 @@ requirements:
       import argparse
       import json
       import os
+      import time
 
       parser = argparse.ArgumentParser()
       parser.add_argument("-s", "--submissionid", required=True, help="Submission ID")
@@ -25,6 +26,9 @@ requirements:
 
       syn = synapseclient.Synapse(configPath=args.synapse_config)
       syn.login()
+
+      # Add a delay so that Synapse has time to refresh the submission view
+      time.sleep(60)
 
       sub = syn.getSubmission(args.submissionid, downloadFile=False)
       name = sub.get("name")
