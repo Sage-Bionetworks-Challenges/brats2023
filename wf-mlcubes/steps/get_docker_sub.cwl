@@ -28,7 +28,7 @@ requirements:
       syn.login()
 
       # Add a delay so that Synapse has time to refresh the submission view
-      time.sleep(60)
+      time.sleep(120)
 
       sub = syn.getSubmission(args.submissionid, downloadFile=False)
       name = sub.get("name")
