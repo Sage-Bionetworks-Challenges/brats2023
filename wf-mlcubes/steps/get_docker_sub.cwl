@@ -27,9 +27,6 @@ requirements:
       syn = synapseclient.Synapse(configPath=args.synapse_config)
       syn.login()
 
-      # Add a delay so that Synapse has time to refresh the submission view
-      time.sleep(120)
-
       sub = syn.getSubmission(args.submissionid, downloadFile=False)
       name = sub.get("name")
       submitter = sub.get("teamId") or sub.get("userId")
@@ -40,6 +37,11 @@ requirements:
                f"AND submission_status IS NULL "
                f"AND submitterid = {submitter} ")
       res = syn.tableQuery(query).asDataFrame()["id"]
+      if len(res) == 0:
+        # Add a delay so that Synapse has time to refresh the submission view,
+        # then try the query again.
+        time.sleep(120)
+        res = syn.tableQuery(query).asDataFrame()["id"]
       docker_id = 0
       if len(res) == 1:
         docker_id = str(res.iloc[0])
