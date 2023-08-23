@@ -40,7 +40,6 @@ requirements:
               mlcube = syn.store(mlcube)
               results['mlcube'] = "synapse:" + mlcube.id
               os.rename(member.name, "mlcube.yaml")
-              results['submission_status'] = "ACCEPTED"
             elif os.path.split(member.name)[1] in ['parameters.yaml', 'parameters.yml']:
               tar_ref.extract(member)
               if os.stat(member.name).st_size:
