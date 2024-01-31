@@ -169,19 +169,19 @@ steps:
         source: "#add_tarball_annots/finished"
     out: [finished]
 
-  check_docker_status:
-    doc: >
-      Check the validation status of the submission; if 'INVALID', throw an
-      exception to stop the workflow - this will prevent the attempt of
-      scoring invalid predictions file (which will then result in errors)
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/check_status.cwl
-    in:
-      - id: status
-        source: "#get_corresponding_docker/status"
-      - id: previous_email_finished
-        source: "#send_docker_results/finished"
-    out: [finished]
+  # check_docker_status:
+  #   doc: >
+  #     Check the validation status of the submission; if 'INVALID', throw an
+  #     exception to stop the workflow - this will prevent the attempt of
+  #     scoring invalid predictions file (which will then result in errors)
+  #   run: |-
+  #     https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/check_status.cwl
+  #   in:
+  #     - id: status
+  #       source: "#get_corresponding_docker/status"
+  #     - id: previous_email_finished
+  #       source: "#send_docker_results/finished"
+  #   out: [finished]
 
   # download_docker:
   #   doc: Download MLCube Docker submission
@@ -193,26 +193,6 @@ steps:
   #     - id: synapse_config
   #       source: "#synapseConfig"
   #   out: []
-
-  annotate_docker_sub:
-    doc: >
-      Annotate Docker submission with MLCube config files
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: "#get_corresponding_docker/docker_id"
-      - id: annotation_values
-        source: "#unzip_tarball/results"
-      - id: to_public
-        default: true
-      - id: force
-        default: true
-      - id: synapse_config
-        source: "#synapseConfig"
-      - id: previous_annotation_finished
-        source: "#update_tarball_annots/finished"
-    out: [finished]
 
   # get_task_entities:
   #   doc: Get parameters based on task number
