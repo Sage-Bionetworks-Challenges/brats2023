@@ -3,6 +3,9 @@ cwlVersion: v1.0
 class: CommandLineTool
 label: Run MLCube compatibility test
 
+requirements:
+- class: InlineJavascriptRequirement
+
 inputs:
 - id: mlcube_file
   type: File
@@ -19,25 +22,41 @@ inputs:
 
 outputs:
 - id: results
-  type: stdout
+  type: File
+  outputBinding:
+    glob: results.json
+- id: status
+  type: string
+  outputBinding:
+    glob: results.json
+    outputEval: $(JSON.parse(self[0].contents)['submission_status'])
+    loadContents: true
+- id: invalid_reasons
+  type: string
+  outputBinding:
+    glob: results.json
+    outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
+    loadContents: true
 
-baseCommand: [medperf, test, run, --offline, --no-cache]
+baseCommand: validate.py
 arguments:
-- prefix: --demo_dataset_url
+- prefix: -s
+  valueFrom: $(inputs.synapse_config.path)
+- prefix: --dataset
   valueFrom: $(inputs.dataset)
-- prefix: --demo_dataset_hash
+- prefix: --dataset_hash
   valueFrom: $(inputs.dataset_hash)
 - prefix: -m
-  valueFrom: $(inputs.mlcube_file)
+  valueFrom: $(inputs.mlcube_file.path)
 - prefix: -p
   valueFrom: $(inputs.data_prep_mlcube)
 - prefix: -e
   valueFrom: $(inputs.metrics_mlcube)
-stdout: results.txt
 
-# hints:
-#   DockerRequirement:
-#     dockerPull: medperf-cli:v1
+
+hints:
+  DockerRequirement:
+    dockerPull: medperf-cli:v1
 
 s:author:
 - class: s:Person
