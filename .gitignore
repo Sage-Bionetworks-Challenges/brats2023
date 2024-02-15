@@ -1,3 +1,5 @@
+.vscode/
+
 evaluation/tests/
 evaluation/tmpdir/
 __pycache__
