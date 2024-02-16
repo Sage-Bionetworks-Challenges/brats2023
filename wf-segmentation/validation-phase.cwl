@@ -68,7 +68,7 @@ steps:
       https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
     in:
       - id: synapseid
-        valueFrom: "syn123"
+        default: "syn123"
       - id: synapse_config
         source: "#synapseConfig"
     out:
@@ -84,6 +84,10 @@ steps:
         source: "#download_goldstandard/filepath"
       - id: entity_type
         source: "#download_submission/entity_type"
+      - id: pred_pattern
+        default: "(\d{5})"
+      - id: gold_pattern
+        default: "(\d{5})-seg"
     out:
       - id: results
       - id: status
@@ -168,7 +172,7 @@ steps:
       - id: goldstandard
         source: "#download_goldstandard/filepath"
       - id: label
-        valueFrom: "BraTS-GoAT"
+        default: "BraTS-GoAT"
     out:
       - id: results
       - id: status

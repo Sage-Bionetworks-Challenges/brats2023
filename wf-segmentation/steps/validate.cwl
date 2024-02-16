@@ -13,6 +13,10 @@ inputs:
   type: File
 - id: entity_type
   type: string
+- id: pred_pattern
+  type: string
+- id: gold_pattern
+  type: string
 
 outputs:
 - id: results
@@ -42,6 +46,10 @@ arguments:
   valueFrom: $(inputs.entity_type)
 - prefix: -o
   valueFrom: results.json
+- prefix: --pred_pattern
+  valueFrom: $(inputs.pred_pattern)
+- prefix: --gold_pattern
+  valueFrom: $(inputs.gold_pattern)
 
 hints:
   DockerRequirement:
