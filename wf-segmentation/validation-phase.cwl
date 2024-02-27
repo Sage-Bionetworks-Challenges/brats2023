@@ -68,7 +68,7 @@ steps:
       https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
     in:
       - id: synapseid
-        default: "syn123"
+        default: "syn53699749"
       - id: synapse_config
         source: "#synapseConfig"
     out:
