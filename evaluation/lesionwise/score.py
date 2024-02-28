@@ -15,7 +15,7 @@ import json
 import pandas as pd
 import synapseclient
 import utils
-import brats2023_metrics.metrics as metrics
+import metrics
 
 
 def get_args():
@@ -42,6 +42,7 @@ def get_label_mapping(f, key_col, value_col):
         pd.read_csv(f, usecols=[key_col, value_col])
         .set_index(key_col)
         .to_dict()
+        .get(value_col)
     )
 
 def calculate_per_lesion(pred, gold, cohort):
@@ -88,7 +89,7 @@ def score(parent, pred_lst, mapping, label):
     """Compute and return scores for each scan."""
     scores = []
     for pred in pred_lst:
-        scan_id = pred[-16:-7]
+        scan_id = pred[-12:-7]
         gold = os.path.join(parent, f"{label}-{scan_id}-seg.nii.gz")
         cohort = f"BraTS-{mapping.get('BraTS-GoAT-' + scan_id)}"
         results = calculate_per_lesion(pred, gold, cohort)
