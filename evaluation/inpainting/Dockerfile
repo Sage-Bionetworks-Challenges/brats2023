@@ -11,4 +11,5 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+COPY 2023_challenge/evaluation/evaluation_utils.py .
 COPY *.py .
