@@ -1,0 +1,3 @@
+[submodule "evaluation/lesionwise/brats2023_metrics"]
+	path = evaluation/lesionwise/brats2023_metrics
+	url = https://github.com/rachitsaluja/BraTS-2023-Metrics.git
