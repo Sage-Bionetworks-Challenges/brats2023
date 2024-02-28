@@ -74,6 +74,18 @@ steps:
     out:
       - id: filepath
 
+  download_mapping_file:
+    doc: Download label mapping file
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
+    in:
+      - id: synapseid
+        default: "syn53699748"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: filepath
+
   validate:
     doc: Validate submission, which should be a tar/zip of NIfTI files
     run: steps/validate.cwl
@@ -171,8 +183,8 @@ steps:
         source: "#update_labels/predictions"
       - id: goldstandard
         source: "#download_goldstandard/filepath"
-      - id: label
-        default: "BraTS-GoAT"
+      - id: mapping_file
+        source: "#download_mapping_file/filepath"
     out:
       - id: results
       - id: status
