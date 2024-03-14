@@ -1,12 +1,19 @@
+.vscode/
+
+# Ignore hidden files/folders
+.DS_Store
+**/.DS_Store
+*/**/.DS_Store
+__pycache__
+
+# Ignore testing/dry run files
 evaluation/tests/
 evaluation/tmpdir/
-__pycache__
-*zip
-*tar*
-all_scores.csv
-results.json
-inputs.yml
+tests/
 
-# Don't track code in `lesionwise` for now
-evaluation/lesionwise/lesionwise_eval.py
-evaluation/lesionwise/surface_distance/
+# Ignore result files
+*.json
+*tar*
+*zip
+all_scores.csv
+inputs.yml
