@@ -9,6 +9,7 @@ import pandas as pd
 
 METRICS = [
     "LesionWise",
+    "Legacy",
     "Sensitivity",
     "Specificity",
     "Volume",
