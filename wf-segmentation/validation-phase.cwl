@@ -62,16 +62,6 @@ steps:
       - id: evaluation_id
       - id: results
 
-  get_task_entities:
-    doc: Get goldstandard and label based on task number
-    run: ../shared/get_task.cwl
-    in:
-      - id: queue
-        source: "#download_submission/evaluation_id"
-    out:
-      - id: synid
-      - id: label
-
   download_goldstandard:
     doc: Download goldstandard
     run: |-
@@ -156,17 +146,6 @@ steps:
         source: "#send_validation_results/finished"
     out: [finished]
 
-  update_labels:
-    doc: Update any "4" labels to "3"
-    run: steps/update_scan_labels.cwl
-    in:
-      - id: input_file
-        source: "#download_submission/filepath"
-      - id: check_validation_finished
-        source: "#check_validation_status/finished"
-    out:
-      - id: predictions
-
   score:
     doc: >
       Score submission; individual case scores will be uploaded to Synapse in
@@ -178,11 +157,11 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: input_file
-        source: "#update_labels/predictions"
+        source: "#download_submission/filepath"
       - id: goldstandard
         source: "#download_goldstandard/filepath"
       - id: label
-        source: "#get_task_entities/label"
+        default: "BraTS-GLI"
     out:
       - id: results
       - id: status
@@ -191,7 +170,7 @@ steps:
     doc: >
       Send email of the scores to the submitter, as well as the link to the
       all_scores CSV file on Synapse
-    run: ../shared/email_results.cwl
+    run: steps/email_results.cwl
     in:
       - id: submissionid
         source: "#submissionId"
