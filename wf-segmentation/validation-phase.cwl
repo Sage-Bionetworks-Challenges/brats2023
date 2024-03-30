@@ -25,7 +25,7 @@ inputs:
   organizers:
     label: User or team ID for challenge organizers
     type: string
-    default: "3466984"
+    default: "3496822"
 
 outputs: []
 
@@ -78,7 +78,7 @@ steps:
       https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
     in:
       - id: synapseid
-        source: "#get_task_entities/synid"
+        default: "syn30282882"
       - id: synapse_config
         source: "#synapseConfig"
     out:
