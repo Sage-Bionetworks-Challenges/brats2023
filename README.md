@@ -34,7 +34,7 @@ Code for the above computations are available in the `evaluation` folder of the 
 
 Branch: `brats_goat2024`
 
-Similar to BraTS 2023, BraTS-GoAT 2024 is also split into two evaluation phases:
+Similar to BraTS 2023, BraTS-GoAT 2024 is split into two evaluation phases:
 
 * **Validation phase:** participants submit <u>segmentation predictions</u> to be evaluated using the validation dataset
 
@@ -54,9 +54,15 @@ FeTS 2024 has one evaluation phase facilitated by Synapse:
 
 * **Validation phase:** participants submit <u>segmentation predictions</u> to be evaluated using the validation dataset
 
+Metrics returned and used for ranking are:
+
+**Metrics** | **Ranking**
+--|--
+Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity | Lesion-wise dice, lesion-wise HD95
+
 The **Code submission phase** will be handled by the [FeTS-AI Task 1 infrastructure].
 
-[FeTS-AI Task 1 infrastructure]; https://github.com/FeTS-AI/Challenge/tree/main/Task_1
+[FeTS-AI Task 1 infrastructure]: https://github.com/FeTS-AI/Challenge/tree/main/Task_1
 
 ## BraTS 2024
 
