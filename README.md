@@ -50,17 +50,13 @@ Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD
 
 Branch: `fets2024`
 
-FeTS 2024 has one evaluation phase facilitated by Synapse:
+FeTS 2024 has one evaluation phase facilitated by this repo:
 
 * **Validation phase:** participants submit <u>segmentation predictions</u> to be evaluated using the validation dataset
 
-Metrics returned and used for ranking are:
+Metrics returned are: lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity
 
-**Metrics** | **Ranking**
---|--
-Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity | Lesion-wise dice, lesion-wise HD95
-
-The **Code submission phase** will be handled by the [FeTS-AI Task 1 infrastructure].
+The **Code submission phase** is handled by the [FeTS-AI Task 1 infrastructure].
 
 [FeTS-AI Task 1 infrastructure]: https://github.com/FeTS-AI/Challenge/tree/main/Task_1
 
