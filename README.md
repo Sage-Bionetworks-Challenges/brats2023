@@ -1,20 +1,24 @@
-# BraTS 2023
+# Evaluation Workflow for BraTS 2023+
 
-The repository contains the infrastructure for the BraTS 2023 series of challenges:
+The repository contains the evaluation workflow for the [BraTS 2023 challenge and beyond],
+including:
 
-* Segmentations (Tasks 1-5)
-* Inpainting (Task 8)
-* Augmentations (Task 9)
+* BraTS 2023
+* BraTS-GoAT 2024
+* FeTS 2024
+* BraTS 2024
 
-[More details about the challenge(s) are available on Synapse](https://www.synapse.org/brats).
+[BraTS 2023 challenge and beyond]: https://www.synapse.org/brats
 
-## Overview
+## BraTS 2023
 
-BraTS 2023 is split into two submission phases:
+Branch: `main`
+
+BraTS 2023 is split into two evaluation phases:
 
 * **Validation phase:** participants submit <u>predictions files</u> (segmentation masks, t1n inferences, etc.) to be evaluated using the validation dataset
 
-* **Test phase:** participants submit <u>models</u> that will generate prediction files using the test dataset
+* **Test phase:** participants submit <u>MLCube models</u> that will generate prediction files using the test dataset
 
 Metrics returned and used for ranking will depend on the task:
 
@@ -26,22 +30,37 @@ Augmentations | Full dice, full HD95, sensitivity, specificity | Dice mean, dice
 
 Code for the above computations are available in the `evaluation` folder of the repo.
 
-## Usage
+## BraTS-GoAT 2024
 
-Metrics can be computed using Python, Docker, or a CWL-runner.  Regardless of approach, a Synapse account will be required.
+Branch: `brats_goat2024`
 
-### Compute Metrics with Python
+Similar to BraTS 2023, BraTS-GoAT 2024 is also split into two evaluation phases:
 
-_Coming soon_
+* **Validation phase:** participants submit <u>segmentation predictions</u> to be evaluated using the validation dataset
 
+* **Test phase:** participants submit <u>MLCube models</u> that will generate segmentation predictions using the test dataset
 
-### Compute Metrics with Docker
+Metrics returned and used for ranking are:
 
-_Coming soon_
+**Metrics** | **Ranking**
+--|--
+Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity | Lesion-wise dice, lesion-wise HD95
 
-### Compute Metrics with CWL
+## FeTS 2024
 
-_Coming soon_
+Branch: `fets2024`
+
+FeTS 2024 has one evaluation phase facilitated by Synapse:
+
+* **Validation phase:** participants submit <u>segmentation predictions</u> to be evaluated using the validation dataset
+
+The **Code submission phase** will be handled by the [FeTS-AI Task 1 infrastructure].
+
+[FeTS-AI Task 1 infrastructure]; https://github.com/FeTS-AI/Challenge/tree/main/Task_1
+
+## BraTS 2024
+
+_To be developed_
 
 ## Kudos 🍻
 
@@ -54,3 +73,4 @@ In addition to:
 
 * [CaPTk](https://github.com/CBICA/CaPTk)
 * [MedPerf](https://github.com/mlcommons/medperf)
+* [FeTS-AI](https://github.com/FeTS-AI/Challenge/tree/main)
