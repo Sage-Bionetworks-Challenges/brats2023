@@ -87,7 +87,7 @@ steps:
       - id: pred_pattern
         default: "(\\d{5})"
       - id: gold_pattern
-        default: "(\\d{5})-seg"
+        default: "(\\d{5})_seg"
     out:
       - id: results
       - id: status
