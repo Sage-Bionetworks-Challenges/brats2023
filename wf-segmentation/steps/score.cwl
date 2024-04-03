@@ -17,6 +17,8 @@ inputs:
   type: File
 - id: label
   type: string
+- id: pred_pattern
+  type: string
 - id: check_validation_finished
   type: boolean?
 
@@ -44,6 +46,8 @@ arguments:
   valueFrom: $(inputs.goldstandard.path)
 - prefix: -l
   valueFrom: $(inputs.label)
+- prefix: --pred_pattern
+  valueFrom: $(inputs.pred_pattern)
 - prefix: -o
   valueFrom: results.json
 

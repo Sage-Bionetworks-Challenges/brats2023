@@ -9,6 +9,7 @@ Run lesion-wise computation and return:
   - Number of TP, FP, FN
 """
 import os
+import re
 import argparse
 import json
 
@@ -33,6 +34,8 @@ def get_args():
                         type=str, default="results.json")
     parser.add_argument("-l", "--label",
                         type=str, default="BraTS-GLI")
+    parser.add_argument("--pred_pattern", type=str,
+                        default="(\d{5}-\d{3})")
     return parser.parse_args()
 
 
@@ -76,13 +79,13 @@ def extract_metrics(df, label, scan_id):
     return res
 
 
-def score(parent, pred_lst, label):
+def score(parent, pred_lst, label, pred_pattern):
     """Compute and return scores for each scan."""
     scores = []
     for pred in pred_lst:
-        scan_id = pred[-16:-7]
-        gold = os.path.join(parent, f"{label}-{scan_id}-seg.nii.gz")
-        results = calculate_per_lesion(pred, gold, label)
+        scan_id = re.search(fr"{pred_pattern}\.nii\.gz$", pred).group(1)
+        gold = os.path.join(parent, f"{label}_{scan_id}_seg.nii.gz")
+        results = calculate_per_lesion(pred, gold, "BraTS-GLI")
         scan_scores = extract_metrics(results, label, scan_id)
         scores.append(scan_scores)
     return pd.concat(scores).sort_values(by="scan_id")
@@ -95,7 +98,7 @@ def main():
     golds = utils.inspect_zip(args.goldstandard_file)
 
     dir_name = os.path.split(golds[0])[0]
-    results = score(dir_name, preds, args.label)
+    results = score(dir_name, preds, args.label, args.pred_pattern)
 
     # Get number of segmentations predicted by participant, as well as
     # descriptive statistics for results.

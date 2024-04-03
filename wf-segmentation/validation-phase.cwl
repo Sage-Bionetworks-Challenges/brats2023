@@ -162,6 +162,8 @@ steps:
         source: "#download_goldstandard/filepath"
       - id: label
         default: "FeTS2022"
+      - id: pred_pattern
+        default: "(\\d{5})"
     out:
       - id: results
       - id: status
