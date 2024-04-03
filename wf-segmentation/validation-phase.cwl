@@ -161,7 +161,7 @@ steps:
       - id: goldstandard
         source: "#download_goldstandard/filepath"
       - id: label
-        default: "BraTS-GLI"
+        default: "FeTS2022"
     out:
       - id: results
       - id: status
