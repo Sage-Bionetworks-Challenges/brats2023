@@ -44,7 +44,7 @@ requirements:
         res = syn.tableQuery(query).asDataFrame()["id"]
       docker_id = 0
       if len(res) == 1:
-        docker_id = str(res.iloc[0])
+        docker_id = res.iloc[0]
 
       with open('results.json', 'w') as out:
         out.write(json.dumps({
