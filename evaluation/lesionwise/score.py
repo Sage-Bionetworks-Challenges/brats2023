@@ -31,12 +31,21 @@ def get_args():
                         type=str, default="/goldstandard.zip")
     parser.add_argument("-o", "--output",
                         type=str, default="results.json")
-    parser.add_argument("-l", "--label",
-                        type=str, default="BraTS-GLI")
+    parser.add_argument("-m", "--mapping_file",
+                        type=str, default="/MappingValidation.csv")
     return parser.parse_args()
 
 
-def calculate_per_lesion(pred, gold, label):
+def get_label_mapping(f, key_col, value_col):
+    """Map new filenames to their original cohort label."""
+    return (
+        pd.read_csv(f, usecols=[key_col, value_col])
+        .set_index(key_col)
+        .to_dict()
+        .get(value_col)
+    )
+
+def calculate_per_lesion(pred, gold, cohort):
     """
     Run per-lesionwise computation of prediction scan against
     goldstandard.
@@ -44,7 +53,7 @@ def calculate_per_lesion(pred, gold, label):
     return metrics.get_LesionWiseResults(
         pred_file=pred,
         gt_file=gold,
-        challenge_name=label
+        challenge_name=cohort
     )
 
 
@@ -76,13 +85,14 @@ def extract_metrics(df, label, scan_id):
     return res
 
 
-def score(parent, pred_lst, label):
+def score(parent, pred_lst, mapping, label):
     """Compute and return scores for each scan."""
     scores = []
     for pred in pred_lst:
-        scan_id = pred[-16:-7]
+        scan_id = pred[-12:-7]
         gold = os.path.join(parent, f"{label}-{scan_id}-seg.nii.gz")
-        results = calculate_per_lesion(pred, gold, label)
+        cohort = f"BraTS-{mapping.get('BraTS-GoAT-' + scan_id)}"
+        results = calculate_per_lesion(pred, gold, cohort)
         scan_scores = extract_metrics(results, label, scan_id)
         scores.append(scan_scores)
     return pd.concat(scores).sort_values(by="scan_id")
@@ -93,9 +103,10 @@ def main():
     args = get_args()
     preds = utils.inspect_zip(args.predictions_file)
     golds = utils.inspect_zip(args.goldstandard_file)
+    mapping = get_label_mapping(args.mapping_file, key_col="NewID", value_col="Cohort")
 
     dir_name = os.path.split(golds[0])[0]
-    results = score(dir_name, preds, args.label)
+    results = score(dir_name, preds, mapping, label="BraTS-GoAT")
 
     # Get number of segmentations predicted by participant, as well as
     # descriptive statistics for results.
