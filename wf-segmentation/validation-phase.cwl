@@ -68,7 +68,19 @@ steps:
       https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
     in:
       - id: synapseid
-        source: "#get_task_entities/synid"
+        default: "syn53699749"
+      - id: synapse_config
+        source: "#synapseConfig"
+    out:
+      - id: filepath
+
+  download_mapping_file:
+    doc: Download label mapping file
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks-Workflows/cwl-tool-synapseclient/v1.4/cwl/synapse-get-tool.cwl
+    in:
+      - id: synapseid
+        default: "syn53699748"
       - id: synapse_config
         source: "#synapseConfig"
     out:
@@ -153,11 +165,11 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: input_file
-        source: "#update_labels/predictions"
+        source: "#download_submission/filepath"
       - id: goldstandard
         source: "#download_goldstandard/filepath"
-      - id: label
-        source: "#get_task_entities/label"
+      - id: mapping_file
+        source: "#download_mapping_file/filepath"
     out:
       - id: results
       - id: status

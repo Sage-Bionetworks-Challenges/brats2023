@@ -15,8 +15,8 @@ inputs:
   type: File
 - id: goldstandard
   type: File
-- id: label
-  type: string
+- id: mapping_file
+  type: File
 - id: check_validation_finished
   type: boolean?
 
@@ -42,8 +42,8 @@ arguments:
   valueFrom: $(inputs.input_file.path)
 - prefix: -g
   valueFrom: $(inputs.goldstandard.path)
-- prefix: -l
-  valueFrom: $(inputs.label)
+- prefix: -m
+  valueFrom: $(inputs.mapping_file)
 - prefix: -o
   valueFrom: results.json
 
