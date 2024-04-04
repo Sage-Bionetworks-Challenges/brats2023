@@ -62,16 +62,6 @@ steps:
       - id: evaluation_id
       - id: results
 
-  get_task_entities:
-    doc: Get goldstandard and label based on task number
-    run: ../shared/get_task.cwl
-    in:
-      - id: queue
-        source: "#download_submission/evaluation_id"
-    out:
-      - id: synid
-      - id: label
-
   download_goldstandard:
     doc: Download goldstandard
     run: |-
@@ -151,17 +141,6 @@ steps:
       - id: previous_email_finished
         source: "#send_validation_results/finished"
     out: [finished]
-
-  update_labels:
-    doc: Update any "4" labels to "3"
-    run: steps/update_scan_labels.cwl
-    in:
-      - id: input_file
-        source: "#download_submission/filepath"
-      - id: check_validation_finished
-        source: "#check_validation_status/finished"
-    out:
-      - id: predictions
 
   score:
     doc: >
