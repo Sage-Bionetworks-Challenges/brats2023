@@ -25,7 +25,7 @@ inputs:
   organizers:
     label: User or team ID for challenge organizers
     type: string
-    default: "3466984"
+    default: "3486193"
 
 outputs: []
 
