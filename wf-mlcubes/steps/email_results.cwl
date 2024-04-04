@@ -47,21 +47,21 @@ requirements:
       else:
         subject += "accepted"
         message.append(
-          "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
+          "Thank you for participating in the BraTS-GoAT 2024 Challenge!\n\n"
           f"<b>Your MLCube submission (ID: {args.submissionid}) has been accepted!</b> 🎉 "
-          "Starting next week on Aug. 22nd, we will begin running the "
+          "Starting next week on April 10th, we will begin running the "
           "submitted MLCubes against the unseen testing data. Results "
           "will be announced at a later time.\n\n"
           "Please note that <b>we did NOT run a compatibility test of your "
           "MLCube</b>, so your submission may be at risk to failing next week. "
           "If you haven't yet, we highly encourage you to "
-          "<a href='https://www.synapse.org/#!Synapse:syn51156910/wiki/622674'>"
+          "<a href='https://www.synapse.org/#!Synapse:syn52939291/wiki/626233'>"
           "locally test your MLCube's compatibility</a> against the sample "
           "benchmarks to catch possible errors. You may submit again if needed.\n\n"
         )
       message.append(
         "Sincerely,\n"
-        "BraTS 2023 Organizers"
+        "BraTS Organizing Committee"
       )
       syn.sendMessage(
         userIds=[participantid],
