@@ -46,22 +46,6 @@ steps:
         source: "#synapseConfig"
     out: []
 
-  organizers_config_access:
-    doc: >
-      Give challenge organizers `download` permissions to the MLCube config files
-    run: |-
-      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/set_permissions.cwl
-    in:
-      - id: entityid
-        source: "#adminUploadSynId"
-      - id: principalid
-        source: "#organizers"
-      - id: permissions
-        valueFrom: "download"
-      - id: synapse_config
-        source: "#synapseConfig"
-    out: []
-
   download_tarball:
     doc: Download MLCube tarball submission
     run: |-
@@ -87,7 +71,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: parent_id
-        source: "#adminUploadSynId"
+        source: "#submitterUploadSynId"
     out:
       - id: results
       - id: mlcube
