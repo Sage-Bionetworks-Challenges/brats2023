@@ -102,7 +102,7 @@ steps:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#unzip_tarball/status"
+        source: "#unzip_tarball/results"
       - id: to_public
         default: true
       - id: force
