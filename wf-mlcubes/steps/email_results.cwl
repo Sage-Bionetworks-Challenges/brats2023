@@ -49,7 +49,7 @@ requirements:
         message.append(
           "Thank you for participating in the BraTS-GoAT 2024 Challenge!\n\n"
           f"<b>Your MLCube submission (ID: {args.submissionid}) has been accepted!</b> 🎉 "
-          "Starting next week on April 10th, we will begin running the "
+          "Starting next week on April 19th, we will begin running the "
           "submitted MLCubes against the unseen testing data. Results "
           "will be announced at a later time.\n\n"
           "Please note that <b>we did NOT run a compatibility test of your "
