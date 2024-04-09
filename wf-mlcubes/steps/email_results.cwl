@@ -2,6 +2,8 @@
 cwlVersion: v1.0
 class: CommandLineTool
 label: Send email with results
+$namespaces:
+  s: https://schema.org/
 
 requirements:
 - class: InlineJavascriptRequirement
@@ -48,15 +50,17 @@ requirements:
         subject += "accepted"
         message.append(
           "Thank you for participating in the BraTS-GoAT 2024 Challenge!\n\n"
-          f"<b>Your MLCube submission (ID: {args.submissionid}) has been accepted!</b> 🎉 "
-          "Starting next week, we will begin running the submitted MLCubes against "
-          "the unseen testing data. Results will be announced at a later time.\n\n"
-          "Please note that <b>we did NOT run a compatibility test of your "
-          "MLCube</b>, so your submission may be at risk to failing next week. "
+          f"<b>Your MLCube submission (ID: {args.submissionid}) has been "
+          "accepted!</b> 🎉 Starting next week, we will run your MLCube "
+          "against the unseen testing data, assuming you have also submitted "
+          "a short paper. If you did not submit a short paper, we will NOT "
+          "run your MLCube. Results will be announced at a later time.\n\n"
+          "Important note: we did <b>NOT run a compatibility test of your "
+          "MLCube</b>; your submission may be at risk to failing next week. "
           "If you haven't yet, we highly encourage you to "
           "<a href='https://www.synapse.org/#!Synapse:syn52939291/wiki/626233'>"
           "locally test your MLCube's compatibility</a> against the sample "
-          "benchmarks to catch possible errors. You may submit again if needed.\n\n"
+          "benchmark to catch possible errors. You may submit again if needed.\n\n"
         )
       message.append(
         "Sincerely,\n"
@@ -94,15 +98,10 @@ arguments:
 hints:
   DockerRequirement:
     dockerPull: sagebionetworks/synapsepythonclient:v2.7.2
-
 s:author:
 - class: s:Person
-  s:identifier: https://orcid.org/0000-0002-5622-7998
   s:email: verena.chung@sagebase.org
+  s:identifier: https://orcid.org/0000-0002-5622-7998
   s:name: Verena Chung
-
 s:codeRepository: https://github.com/Sage-Bionetworks-Challenges/brats2023
 s:license: https://spdx.org/licenses/Apache-2.0
-
-$namespaces:
-  s: https://schema.org/
