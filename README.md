@@ -14,6 +14,8 @@ Metrics returned and used for ranking are:
 --|--
 Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity | Lesion-wise dice, lesion-wise HD95
 
+Code for the above computations are available in the `evaluation/lesionwise` folder of the repo.
+
 ## Kudos 🍻
 
 BraTS 2023 evaluation would not be possible without the work of:
