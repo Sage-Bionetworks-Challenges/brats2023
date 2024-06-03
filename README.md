@@ -10,9 +10,17 @@ including:
 
 [BraTS 2023 challenge and beyond]: https://www.synapse.org/brats
 
+## BraTS 2024
+
+Branch: `brats2024`
+
+BraTS 2024 is an extension to [BraTS 2023](#brats-2023), and will use the same metrics for ranking.
+
+_More details to come._
+
 ## BraTS 2023
 
-Branch: `main`
+Branch: `brats2023`
 
 BraTS 2023 is split into two evaluation phases:
 
@@ -59,14 +67,6 @@ Metrics returned are: lesion-wise dice, lesions-wise Hausdorff 95% distance (HD9
 The **Code submission phase** is handled by the [FeTS-AI Task 1 infrastructure].
 
 [FeTS-AI Task 1 infrastructure]: https://github.com/FeTS-AI/Challenge/tree/main/Task_1
-
-## BraTS 2024
-
-Branch: `brats2024` / `main`
-
-BraTS 2024 is an extension to BraTS 2023, and will use the same metrics for ranking.
-
-_More details to come._
 
 ## Kudos 🍻
 
