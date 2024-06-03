@@ -12,7 +12,7 @@ including:
 
 ## BraTS 2024
 
-Branch: `brats2024`
+Branch: `main`
 
 BraTS 2024 is an extension to [BraTS 2023](#brats-2023), and will use the same metrics for ranking.
 
