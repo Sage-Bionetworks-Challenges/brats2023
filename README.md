@@ -62,11 +62,15 @@ The **Code submission phase** is handled by the [FeTS-AI Task 1 infrastructure].
 
 ## BraTS 2024
 
-_To be developed_
+Branch: `brats2024` / `main`
+
+BraTS 2024 is an extension to BraTS 2023, and will use the same metrics for ranking.
+
+_More details to come._
 
 ## Kudos 🍻
 
-BraTS 2023 evaluation would not be possible without the work of:
+BraTS 2023+ evaluation would not be possible without the work of:
 
 * [@FelixSteinbauer](https://github.com/FelixSteinbauer) - inpainting metrics
 * [@rachitsaluja](https://github.com/rachitsaluja) - lesionwise segmentation metrics
