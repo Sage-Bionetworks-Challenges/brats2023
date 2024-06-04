@@ -1,7 +1,7 @@
 """Generate a subset of challenge data.
 
 By default, the script will randomly select 1% of the full dataset (rounded
-down) and save the results into a new folder.
+to the nearest integer) and save the results into a new folder.
 
 Note: script was created due to a CBSD request for the BraTS 2025 Lighthouse
 Challenge application (CBSD-4).
