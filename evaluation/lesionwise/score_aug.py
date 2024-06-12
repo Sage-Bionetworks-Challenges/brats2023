@@ -47,6 +47,17 @@ def calculate_per_lesion(pred, gold, label):
     )
 
 
+def gini(x):
+    """Algorithm for GINI index metric (credit: @chepyle)."""
+    sorted_x = np.sort(x)
+    n = len(x)
+    cumx = np.cumsum(sorted_x, dtype=float)
+    index = (n + 1 - 2 * np.sum(cumx) / cumx[-1]) / n
+    if np.isnan(index):
+        return 1.0
+    return index
+
+
 def extract_metrics(df, label, scan_id):
     """Get scores for three regions: ET, WT, and TC.
 
