@@ -12,9 +12,11 @@ import argparse
 import json
 
 import pandas as pd
+import numpy as np
 import synapseclient
+
 import utils
-import lesionwise_eval
+from brats2023_metrics import metrics as lesionwise_eval
 
 
 def get_args():
