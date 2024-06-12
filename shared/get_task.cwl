@@ -20,29 +20,34 @@ outputs:
 expression: |
 
   ${
-    if (inputs.queue == "9615339") {
+    if (inputs.queue == "9615542") {
       return {
-        synid: "syn51514102",
+        synid: "UPDATE_ME",
         label: "BraTS-GLI"
       };
-    } else if (inputs.queue == "9615344") {
+    } else if (inputs.queue == "9615545") {
       return {
-        synid: "syn52237053",
+        synid: "UPDATE_ME",
         label: "BraTS-MET"
       };
-    } else if (inputs.queue == "9615340") {
+    } else if (inputs.queue == "9615543") {
       return {
-        synid: "syn52045897",
+        synid: "UPDATE_ME",
         label: "BraTS-SSA"
       };
-    } else if (inputs.queue == "9615313") {
+    } else if (inputs.queue == "9615583") {
       return {
-        synid: "syn51930262",
-        label: "BraTS-MEN"
+        synid: "UPDATE_ME",
+        label: "BraTS-GoAT"
       };
-    } else if (inputs.queue == "9615345") {
+    } else if (inputs.queue == "9615544") {
       return {
-        synid: "syn51929881",
+        synid: "UPDATE_ME",
+        label: "BraTS-MEN-RT"
+      };
+    } else if (inputs.queue == "9615546") {
+      return {
+        synid: "UPDATE_ME",
         label: "BraTS-PED"
       };
     } else {
