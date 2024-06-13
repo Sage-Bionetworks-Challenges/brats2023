@@ -81,6 +81,7 @@ BraTS 2023+ evaluation would not be possible without the work of:
 
 * [@FelixSteinbauer](https://github.com/FelixSteinbauer) - inpainting metrics
 * [@rachitsaluja](https://github.com/rachitsaluja) - lesionwise segmentation metrics
+* [@sarthakpati](https://github.com/sarthakpati) - pathology metrics
 
 In addition to:
 
