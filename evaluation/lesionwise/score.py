@@ -112,7 +112,7 @@ def main():
 
     # BraTS-MEN-RT organizers requested to only return full Dice
     # and HD95 scores back to participants.
-    if args.label == "BraTS-MEN":
+    if args.label == "BraTS-MEN":  # FIXME after dryrunning
         results.to_csv(
             "all_scores.csv",
             columns=[col for col in results.columns
