@@ -8,6 +8,8 @@ FeTS 2024 has one evaluation phase facilitated by this repo:
 
 Metrics returned are: lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity
 
+Code for the above computations are available in the `evaluation/lesionwise` folder of the repo.
+
 The **Code submission phase** is handled by the [FeTS-AI Task 1 infrastructure].
 
 [FeTS-AI Task 1 infrastructure]: https://github.com/FeTS-AI/Challenge/tree/main/Task_1
