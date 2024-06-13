@@ -14,9 +14,16 @@ including:
 
 Branch: `main`
 
-BraTS 2024 is an extension to [BraTS 2023](#brats-2023), and will use the same metrics for ranking.
+BraTS 2024 is an extension to [BraTS 2023](#brats-2023), and will also follow the two evaluation phases.
 
-_More details to come._
+Metrics returned and used for rankning will depend on the task:
+
+**Task** | **Metrics** | **Ranking**
+--|--|--
+Segmentations | _More details to come_
+Inpainting | _More details to come_
+Augmentations | Full dice, full HD95, sensitivity, specificity | Dice mean, Dice GINI index, HD95 mean, HD95 GINI index
+Pathology | Matthews correlation coefficient (MCC), F1, sensitivity, specificity | All 4 metrics
 
 ## BraTS 2023
 
