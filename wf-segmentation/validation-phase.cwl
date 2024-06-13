@@ -64,7 +64,7 @@ steps:
 
   get_task_entities:
     doc: Get goldstandard and label based on task number
-    run: ../shared/get_task.cwl
+    run: steps/get_task.cwl
     in:
       - id: queue
         source: "#download_submission/evaluation_id"
