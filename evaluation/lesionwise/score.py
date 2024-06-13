@@ -107,26 +107,39 @@ def main():
     results = pd.concat([results, metrics])
 
     # CSV file of scores for all scans.
-    results.to_csv("all_scores.csv",
-                   columns=[col for col in results.columns 
-                            if col.startswith("LesionWise") or col.startswith("Num")])
-    results.to_csv("all_legacy_scores.csv",
-                   columns=[col for col in results.columns
-                            if not col.startswith("LesionWise") and not col.startswith("Num")])
     syn = synapseclient.Synapse(configPath=args.synapse_config)
     syn.login(silent=True)
+
+    # BraTS-MEN-RT organizers requested to only return full Dice
+    # and HD95 scores back to participants.
+    if args.label == "BraTS-MEN":  # FIXME after dryrunning
+        results.to_csv(
+            "all_scores.csv",
+            columns=[col for col in results.columns
+                     if not col.startswith("LesionWise") or col.startswith("Num")])
+    else:
+        results.to_csv(
+            "all_scores.csv",
+            columns=[col for col in results.columns 
+                     if col.startswith("LesionWise") or col.startswith("Num")])
+        results.to_csv(
+            "all_full_scores.csv",
+            columns=[col for col in results.columns
+                     if not col.startswith("LesionWise") and not col.startswith("Num")])
+        csv_full = synapseclient.File("all_full_scores.csv", parent=args.parent_id)
+        csv_full = syn.store(csv_full)
+
     csv = synapseclient.File("all_scores.csv", parent=args.parent_id)
     csv = syn.store(csv)
-    csv_full = synapseclient.File("all_legacy_scores.csv", parent=args.parent_id)
-    csv_full = syn.store(csv_full)
 
     # Results file for annotations.
     with open(args.output, "w") as out:
         res_dict = {**results.loc["mean"],
                     "cases_evaluated": cases_evaluated,
                     "submission_scores": csv.id,
-                    "submission_scores_legacy": csv_full.id,
                     "submission_status": "SCORED"}
+        if args.label != "BraTS-MEN":
+            res_dict["submission_scores_legacy"] = csv_full.id
         res_dict = {k: v for k, v in res_dict.items() if not pd.isna(v)}
         out.write(json.dumps(res_dict))
 
