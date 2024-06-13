@@ -12,9 +12,11 @@ import argparse
 import json
 
 import pandas as pd
+import numpy as np
 import synapseclient
+
 import utils
-import lesionwise_eval
+from brats2023_metrics import metrics as lesionwise_eval
 
 
 def get_args():
@@ -45,6 +47,17 @@ def calculate_per_lesion(pred, gold, label):
         gt_file=gold,
         challenge_name=label
     )
+
+
+def gini(x):
+    """Algorithm for GINI index metric (credit: @chepyle)."""
+    sorted_x = np.sort(x)
+    n = len(x)
+    cumx = np.cumsum(sorted_x, dtype=float)
+    index = (n + 1 - 2 * np.sum(cumx) / cumx[-1]) / n
+    if np.isnan(index):
+        return 1.0
+    return index
 
 
 def extract_metrics(df, label, scan_id):
@@ -97,13 +110,10 @@ def main():
     results = score(dir_name, preds, args.label)
 
     # Get number of segmentations predicted by participant, as well as
-    # descriptive statistics for results.
+    # the mean and GINI-index.
     cases_evaluated = len(results.index)
-    metrics = (results
-               .describe()
-               .rename(index={'25%': "25quantile", '50%': "median", '75%': "75quantile"})
-               .drop(["count", "min", "max"]))
-    metrics.loc["variance"] = results.var()
+    metrics = pd.DataFrame({"mean": results.mean()}).T
+    metrics.loc["gini"] = results.agg(gini)
     results = pd.concat([results, metrics])
 
     # CSV file of scores for all scans.
@@ -124,13 +134,13 @@ def main():
                              'Hausdorff95_TC': "Hausdorff95_TC_mean",
                              'Hausdorff95_WT': "Hausdorff95_WT_mean", }),
                     **results
-                    .loc["variance"]
-                    .rename({'Dice_ET': "Dice_ET_var",
-                             'Dice_TC': "Dice_TC_var",
-                             'Dice_WT': "Dice_WT_var",
-                             'Hausdorff95_ET': "Hausdorff95_ET_var",
-                             'Hausdorff95_TC': "Hausdorff95_TC_var",
-                             'Hausdorff95_WT': "Hausdorff95_WT_var", }),
+                    .loc["gini"]
+                    .rename({'Dice_ET': "Dice_ET_gini",
+                             'Dice_TC': "Dice_TC_gini",
+                             'Dice_WT': "Dice_WT_gini",
+                             'Hausdorff95_ET': "Hausdorff95_ET_gini",
+                             'Hausdorff95_TC': "Hausdorff95_TC_gini",
+                             'Hausdorff95_WT': "Hausdorff95_WT_gini", }),
                     "cases_evaluated": cases_evaluated,
                     "submission_scores": csv.id,
                     "submission_status": "SCORED"}
