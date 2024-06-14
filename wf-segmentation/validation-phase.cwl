@@ -152,17 +152,6 @@ steps:
         source: "#send_validation_results/finished"
     out: [finished]
 
-  update_labels:
-    doc: Update any "4" labels to "3"
-    run: steps/update_scan_labels.cwl
-    in:
-      - id: input_file
-        source: "#download_submission/filepath"
-      - id: check_validation_finished
-        source: "#check_validation_status/finished"
-    out:
-      - id: predictions
-
   score:
     doc: >
       Score submission; individual case scores will be uploaded to Synapse in
@@ -174,7 +163,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: input_file
-        source: "#update_labels/predictions"
+        source: "#download_submission/predictions"
       - id: goldstandard
         source: "#download_goldstandard/filepath"
       - id: label
