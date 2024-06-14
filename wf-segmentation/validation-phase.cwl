@@ -163,7 +163,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: input_file
-        source: "#download_submission/predictions"
+        source: "#download_submission/filepath"
       - id: goldstandard
         source: "#download_goldstandard/filepath"
       - id: label
