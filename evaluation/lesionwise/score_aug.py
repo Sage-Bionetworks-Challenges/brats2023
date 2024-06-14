@@ -16,7 +16,7 @@ import numpy as np
 import synapseclient
 
 import utils
-from brats2023_metrics import metrics as lesionwise_eval
+import metrics
 
 
 def get_args():
@@ -42,7 +42,7 @@ def calculate_per_lesion(pred, gold, label):
     Run per-lesionwise computation of prediction scan against
     goldstandard.
     """
-    return lesionwise_eval.get_LesionWiseResults(
+    return metrics.get_LesionWiseResults(
         pred_file=pred,
         gt_file=gold,
         challenge_name=label
