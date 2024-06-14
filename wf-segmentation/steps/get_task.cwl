@@ -22,7 +22,7 @@ expression: |
   ${
     if (inputs.queue == "9615542") {
       return {
-        synid: "UPDATE_ME",
+        synid: "syn51514102", // FIXME
         label: "BraTS-GLI"
       };
     } else if (inputs.queue == "9615545") {
@@ -42,8 +42,8 @@ expression: |
       };
     } else if (inputs.queue == "9615544") {
       return {
-        synid: "UPDATE_ME",
-        label: "BraTS-MEN-RT"
+        synid: "syn51930262", // FIXME
+        label: "BraTS-MEN" // FIXME
       };
     } else if (inputs.queue == "9615546") {
       return {
