@@ -15,7 +15,7 @@ import json
 import pandas as pd
 import synapseclient
 import utils
-import metrics
+from brats2023_metrics import metrics
 
 
 def get_args():
