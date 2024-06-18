@@ -16,8 +16,7 @@ outputs:
   type: string
 - id: label
   type: string
-
-expression: |
+expression: |2-
 
   ${
     if (inputs.queue == "9615542") {
@@ -47,7 +46,7 @@ expression: |
       };
     } else if (inputs.queue == "9615546") {
       return {
-        synid: "UPDATE_ME",
+        synid: "syn60969497",
         label: "BraTS-PED"
       };
     } else {
