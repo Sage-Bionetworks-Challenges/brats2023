@@ -21,12 +21,12 @@ expression: |2-
   ${
     if (inputs.queue == "9615542") {
       return {
-        synid: "syn51514102", // FIXME
+        synid: "UPDATE_ME",
         label: "BraTS-GLI"
       };
     } else if (inputs.queue == "9615545") {
       return {
-        synid: "UPDATE_ME",
+        synid: "syn61453486",
         label: "BraTS-MET"
       };
     } else if (inputs.queue == "9615543") {
@@ -36,13 +36,13 @@ expression: |2-
       };
     } else if (inputs.queue == "9615583") {
       return {
-        synid: "UPDATE_ME",
+        synid: "syn61455588",
         label: "BraTS-GoAT"
       };
     } else if (inputs.queue == "9615544") {
       return {
-        synid: "syn51930262", // FIXME
-        label: "BraTS-MEN" // FIXME
+        synid: "UPDATE_ME", // FIXME
+        label: "BraTS-MEN-RT" // FIXME
       };
     } else if (inputs.queue == "9615546") {
       return {
