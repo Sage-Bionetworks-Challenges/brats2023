@@ -34,11 +34,6 @@ expression: |2-
         synid: "UPDATE_ME",
         label: "BraTS-SSA"
       };
-    } else if (inputs.queue == "9615583") {
-      return {
-        synid: "syn61455588",
-        label: "BraTS-GoAT"
-      };
     } else if (inputs.queue == "9615544") {
       return {
         synid: "UPDATE_ME", // FIXME
