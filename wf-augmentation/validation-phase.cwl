@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: Workflow
-label: BraTS 2023 - Task 9 workflow
+label: BraTS 2024 - Task 9 workflow
 
 requirements:
   - class: StepInputExpressionRequirement
