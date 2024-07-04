@@ -49,7 +49,7 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: docker.synapse.org/syn51156910/lesionwise-evaluation:v1
+    dockerPull: docker.synapse.org/syn53708126/lesionwise-evaluation:2023-v1.0.0
 
 s:author:
 - class: s:Person
