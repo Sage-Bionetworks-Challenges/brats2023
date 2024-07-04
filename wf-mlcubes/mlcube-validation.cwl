@@ -64,7 +64,7 @@ steps:
 
   unzip_tarball:
     doc: Unzip MLCube config tarball, then upload file(s) to Synapse.
-    run: ../shared/extract_config.cwl
+    run: steps/extract_config.cwl
     in:
       - id: input_file
         source: "#download_tarball/filepath"
