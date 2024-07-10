@@ -58,8 +58,7 @@ def _extract_col(col, pattern_to_extract=r"(BraTSPath_Val.*png$)"):
 
 def create_gandlf_input(pred_file, gold_file, filename, penalty_label):
     """
-    Create 3-col CSV file to use as input to GanDLF. Return number
-    of predictions made by participant.
+    Create 3-col CSV file to use as input to GanDLF.
     """
 
     # Extract only the filename from SubjectID for easier joins.
@@ -75,15 +74,13 @@ def create_gandlf_input(pred_file, gold_file, filename, penalty_label):
     res["Prediction"] = res["Prediction"].astype(int)
     res.to_csv(filename, index=False)
 
-    return len(res.index) - res["Prediction"].value_counts().get(penalty_label, 0)
-
 
 def main():
     """Main function."""
     args = get_args()
 
     gandlf_input_file = "tmp.csv"
-    predictions_count = create_gandlf_input(
+    create_gandlf_input(
         args.predictions_file,
         args.goldstandard_file,
         filename=gandlf_input_file,
@@ -103,7 +100,6 @@ def main():
         }
         out.write(json.dumps({
             **results,
-            "number_of_predictions": int(predictions_count),
             "submission_status": "SCORED"
         }))
 
