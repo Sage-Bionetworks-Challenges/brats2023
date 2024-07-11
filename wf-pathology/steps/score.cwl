@@ -15,6 +15,8 @@ inputs:
   type: File
 - id: gandlf_config
   type: File
+- id: penalty_label
+  type: int?
 - id: check_validation_finished
   type: boolean?
 
@@ -42,6 +44,8 @@ arguments:
   valueFrom: $(inputs.gandlf_config.path)
 - prefix: -o
   valueFrom: results.json
+- prefix: --penalty_label
+  valueFrom: $(inputs.penalty_label)
 
 hints:
   DockerRequirement:

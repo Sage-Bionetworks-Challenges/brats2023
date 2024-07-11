@@ -168,6 +168,8 @@ steps:
         source: "#download_goldstandard/filepath"
       - id: gandlf_config
         source: "#download_config/filepath"
+      - id: penalty_label
+        default: 6
     out:
       - id: results
       - id: status
