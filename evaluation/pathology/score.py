@@ -18,7 +18,8 @@ METRICS_TO_RETURN = [
     "mcc",
     "f1_global",
     "accuracy_global",
-    "specificity_global"
+    "specificity_global",
+    "recall_global"
 ]
 
 
@@ -35,6 +36,7 @@ def get_args():
                         type=str, default="gandlf_config.yaml")
     parser.add_argument("-o", "--output",
                         type=str, default="results.json")
+    parser.add_argument("--penalty_label", type=int, default=None)
     return parser.parse_args()
 
 
@@ -51,8 +53,8 @@ def run_gandlf(config_file, input_file, output_file):
     subprocess.check_call(cmd)
 
 
-def _extract_col(col, pattern_to_extract=r"(BraTSPath_Val.*png$)"):
-    """Return specific content from column."""
+def _extract_value_by_pattern(col, pattern_to_extract):
+    """Return specific content from column, specified by pattern."""
     return col.str.extract(pattern_to_extract)
 
 
@@ -62,16 +64,23 @@ def create_gandlf_input(pred_file, gold_file, filename, penalty_label):
     """
 
     # Extract only the filename from SubjectID for easier joins.
+    filename_pattern = r"(BraTSPath_Val.*png$)"
     pred = pd.read_csv(pred_file)
-    pred["SubjectID"] = _extract_col(pred.loc[:, "SubjectID"])
-
+    pred["SubjectID"] = _extract_value_by_pattern(
+        pred.loc[:, "SubjectID"], filename_pattern
+    )
     gold = pd.read_csv(gold_file)
-    gold["SubjectID"] = _extract_col(gold.loc[:, "SubjectID"])
+    gold["SubjectID"] = _extract_value_by_pattern(
+        gold.loc[:, "SubjectID"], filename_pattern
+    )
 
-    # Left join pred to gold. For missing predictions, assign "penalty"
-    # label.
-    res = gold.merge(pred, how="left", on="SubjectID").fillna(penalty_label)
-    res["Prediction"] = res["Prediction"].astype(int)
+    # If penalty needs to be applied, do a left join then assign
+    # penalty label to any missing subject IDs in prediction.
+    if penalty_label:
+        res = gold.merge(pred, how="left", on="SubjectID").fillna(penalty_label)
+        res["Prediction"] = res["Prediction"].astype(int)
+    else:
+        res = gold.merge(pred, on="SubjectID")
     res.to_csv(filename, index=False)
 
 
@@ -84,7 +93,7 @@ def main():
         args.predictions_file,
         args.goldstandard_file,
         filename=gandlf_input_file,
-        penalty_label=6,
+        penalty_label=args.penalty_label,
     )
 
     gandlf_output_file = "tmp.json"
