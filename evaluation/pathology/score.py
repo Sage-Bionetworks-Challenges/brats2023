@@ -78,6 +78,9 @@ def create_gandlf_input(pred_file, gold_file, filename, penalty_label):
     # penalty label to any missing subject IDs in prediction.
     if penalty_label:
         res = gold.merge(pred, how="left", on="SubjectID").fillna(penalty_label)
+
+        # Reassign coltype to int, since NaN values will conver
+        # coltype to float.
         res["Prediction"] = res["Prediction"].astype(int)
     else:
         res = gold.merge(pred, on="SubjectID")
