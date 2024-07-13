@@ -32,8 +32,6 @@ outputs:
 
 baseCommand: score.py
 arguments:
-- prefix: -s
-  valueFrom: $(inputs.synapse_config.path)
 - prefix: -p
   valueFrom: $(inputs.input_file.path)
 - prefix: -g
@@ -47,7 +45,7 @@ arguments:
 
 hints:
   DockerRequirement:
-    dockerPull: FIXME
+    dockerPull: docker.synapse.org/syn53708126/pathology-evaluation:v1.0.0
 
 s:author:
 - class: s:Person
