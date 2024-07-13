@@ -26,6 +26,10 @@ inputs:
     label: User or team ID for challenge organizers
     type: string
     default: "3466984"
+  pattern:
+    label: Regex pattern for valid SubjectIDs
+    type: string
+    default: "BraTSPath_Val.*png$"
 
 outputs: []
 
@@ -92,10 +96,10 @@ steps:
     in:
       - id: input_file
         source: "#download_submission/filepath"
-      - id: goldstandard
-        source: "#download_goldstandard/filepath"
       - id: entity_type
         source: "#download_submission/entity_type"
+      - id: subject_id_pattern
+        source: "#pattern"
     out:
       - id: results
       - id: status
@@ -166,6 +170,8 @@ steps:
         source: "#download_config/filepath"
       - id: penalty_label
         default: 6
+      - id: subject_id_pattern
+        source: "#pattern"
     out:
       - id: results
       - id: status

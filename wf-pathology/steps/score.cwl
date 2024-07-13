@@ -15,6 +15,8 @@ inputs:
   type: File
 - id: penalty_label
   type: int?
+- id: subject_id_pattern
+  type: string
 - id: check_validation_finished
   type: boolean?
 
@@ -42,6 +44,8 @@ arguments:
   valueFrom: results.json
 - prefix: --penalty_label
   valueFrom: $(inputs.penalty_label)
+- prefix: --subject_id_pattern
+  valueFrom: $(inputs.subject_id_pattern)
 
 hints:
   DockerRequirement:

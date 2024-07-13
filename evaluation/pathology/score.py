@@ -35,6 +35,7 @@ def get_args():
     parser.add_argument("-o", "--output",
                         type=str, default="results.json")
     parser.add_argument("--penalty_label", type=int, default=None)
+    parser.add_argument("--subject_id_pattern", type=str, required=True)
     return parser.parse_args()
 
 
@@ -56,13 +57,14 @@ def _extract_value_by_pattern(col, pattern_to_extract):
     return col.str.extract(pattern_to_extract)
 
 
-def create_gandlf_input(pred_file, gold_file, filename, penalty_label):
+def create_gandlf_input(pred_file, gold_file, out_file,
+                        penalty_label, pattern):
     """
     Create 3-col CSV file to use as input to GanDLF.
     """
 
     # Extract only the filename from SubjectID for easier joins.
-    filename_pattern = r"(BraTSPath_Val.*png$)"
+    filename_pattern = rf"({pattern})"
     pred = pd.read_csv(pred_file)
     pred["SubjectID"] = _extract_value_by_pattern(
         pred.loc[:, "SubjectID"], filename_pattern
@@ -82,7 +84,7 @@ def create_gandlf_input(pred_file, gold_file, filename, penalty_label):
         res["Prediction"] = res["Prediction"].astype(int)
     else:
         res = gold.merge(pred, on="SubjectID")
-    res.to_csv(filename, index=False)
+    res.to_csv(out_file, index=False)
 
 
 def main():
@@ -93,8 +95,9 @@ def main():
     create_gandlf_input(
         args.predictions_file,
         args.goldstandard_file,
-        filename=gandlf_input_file,
+        out_file=gandlf_input_file,
         penalty_label=args.penalty_label,
+        pattern=args.subject_id_pattern,
     )
 
     gandlf_output_file = "tmp.json"
