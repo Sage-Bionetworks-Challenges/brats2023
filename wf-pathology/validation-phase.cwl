@@ -171,10 +171,9 @@ steps:
       - id: status
       
   send_score_results:
-    doc: >
-      Send email of the scores to the submitter, as well as the link to the
-      all_scores CSV file on Synapse
-    run: ../shared/email_results.cwl
+    doc: Send email of the scores to the submitter
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/score_email.cwl
     in:
       - id: submissionid
         source: "#submissionId"
