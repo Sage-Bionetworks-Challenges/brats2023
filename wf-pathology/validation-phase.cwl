@@ -155,13 +155,9 @@ steps:
     out: [finished]
 
   score:
-    doc: >
-      Score submission; individual case scores will be uploaded to Synapse in
-      a CSV while aggregate (mean) scores will be returned to the submitter
+    doc: Score submission
     run: steps/score.cwl
     in:
-      - id: synapse_config
-        source: "#synapseConfig"
       - id: input_file
         source: "#download_submission/filepath"
       - id: goldstandard

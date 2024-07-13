@@ -7,8 +7,6 @@ requirements:
 - class: InlineJavascriptRequirement
 
 inputs:
-- id: synapse_config
-  type: File
 - id: input_file
   type: File
 - id: goldstandard

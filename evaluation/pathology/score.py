@@ -26,14 +26,12 @@ METRICS_TO_RETURN = [
 def get_args():
     """Set up command-line interface and get arguments."""
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--synapse_config",
-                        type=str, default="/.synapseConfig")
     parser.add_argument("-p", "--predictions_file",
                         type=str, default="/predictions.csv")
     parser.add_argument("-g", "--goldstandard_file",
                         type=str, default="/goldstandard.csv")
     parser.add_argument("-c", "--gandlf_config",
-                        type=str, default="gandlf_config.yaml")
+                        type=str, default="/gandlf_config.yaml")
     parser.add_argument("-o", "--output",
                         type=str, default="results.json")
     parser.add_argument("--penalty_label", type=int, default=None)
