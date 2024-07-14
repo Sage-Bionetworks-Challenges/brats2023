@@ -44,7 +44,10 @@ requirements:
           del annots['submission_status']
           del annots['submission_scores']
           for annot in args.private_annotations:
-            del annots[annot]
+            try:
+              del annots[annot]
+            except KeyError:
+              pass
           if csv_full_id:
             del annots['submission_scores_legacy']
           subject = f"Submission to '{evaluation.name}' scored!"
