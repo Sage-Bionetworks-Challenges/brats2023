@@ -19,7 +19,7 @@ def get_args():
     """Set up command-line interface and get arguments."""
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "-p", "--predictions_file", type=str, default="/predictions.zip"
+        "-p", "--predictions_file", type=str, default="/predictions.csv"
     )
     parser.add_argument("-e", "--entity_type", type=str, required=True)
     parser.add_argument("-o", "--output", type=str)
