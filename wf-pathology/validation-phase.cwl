@@ -190,7 +190,7 @@ steps:
       # OPTIONAL: add annotations to be withheld from participants to `[]`
       # - id: private_annotations
       #   default: []
-    out: [finished]
+    out: []
 
   add_score_annots:
     doc: >
