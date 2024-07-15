@@ -14,9 +14,9 @@ inputs:
 - id: entity_type
   type: string
 - id: pred_pattern
-  type: string?
+  type: string
 - id: gold_pattern
-  type: string?
+  type: string
 
 outputs:
 - id: results
