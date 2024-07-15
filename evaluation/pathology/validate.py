@@ -48,7 +48,9 @@ def validate(pred_file, pattern):
             min_val=0,
             max_val=5
         ))
-        
+
+        # Check that SubjectIDs contain the filename of the digitized
+        # tissue, including the file extension.
         if not all(pred["SubjectID"].str.contains(pattern)):
             errors.append(
                 "'SubjectID' values must be the filenames in the "
