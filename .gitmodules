@@ -4,3 +4,6 @@
 [submodule "evaluation/inpainting/2023_challenge"]
 	path = evaluation/inpainting/2023_challenge
 	url = https://github.com/BraTS-inpainting/2023_challenge.git
+[submodule "evaluation/lesionwise/BraTS-2024-Metrics"]
+	path = evaluation/lesionwise/BraTS-2024-Metrics
+	url = https://github.com/rachitsaluja/BraTS-2024-Metrics.git
