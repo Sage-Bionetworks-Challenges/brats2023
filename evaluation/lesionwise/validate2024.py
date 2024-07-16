@@ -13,11 +13,15 @@ import nibabel as nib
 import utils
 
 DIM = (240, 240, 155)
-DIM_GLI_POSTOP = (182, 182, 182)
-ORIGIN = [[-1.,   0.,   0.,  -0.],
-          [0.,  -1.,   0., 239.],
-          [0.,   0.,   1.,   0.],
-          [0.,   0.,   0.,   1.]]
+DIM_GLI_POSTOP = (182, 218, 182)
+ORIGIN = [[-1.,  0., 0.,  -0.],
+          [ 0., -1., 0., 239.],
+          [ 0.,  0., 1.,   0.],
+          [ 0.,  0., 0.,   1.]]
+ORIGIN_GLI_POSTOP = [[-1., 0., 0.,   90.],
+                     [ 0., 1., 0., -126.],
+                     [ 0., 0., 1.,  -72.],
+                     [ 0., 0., 0.,    1.]]
 
 
 def get_args():
@@ -46,7 +50,7 @@ def _check_header(img, label):
     error = ""
     if label != "BraTS-MEN-RT":
         if img.header.get_data_shape() not in (DIM, DIM_GLI_POSTOP) and \
-                not (img.header.get_qform() == ORIGIN).all():
+                not (img.header.get_qform() in (ORIGIN, ORIGIN_GLI_POSTOP)).all():
             error = ("One or more predictions is not a NIfTI file with "
                      "the expected dimensions and/or origin. Please check "
                      "the Submission Tutorial for more details.")
