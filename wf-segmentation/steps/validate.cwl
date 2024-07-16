@@ -17,6 +17,8 @@ inputs:
   type: string
 - id: gold_pattern
   type: string
+- id: label
+  type: string
 
 outputs:
 - id: results
@@ -36,7 +38,7 @@ outputs:
     outputEval: $(JSON.parse(self[0].contents)['submission_errors'])
     loadContents: true
 
-baseCommand: validate.py
+baseCommand: validate2024.py
 arguments:
 - prefix: -p
   valueFrom: $(inputs.input_file)
@@ -50,6 +52,8 @@ arguments:
   valueFrom: $(inputs.pred_pattern)
 - prefix: --gold_pattern
   valueFrom: $(inputs.gold_pattern)
+- prefix: -l
+  valueFrom: $(inputs.label)
 
 hints:
   DockerRequirement:

@@ -98,6 +98,8 @@ steps:
         default: "(\\d{4,5}-\\d{1,3})"
       - id: gold_pattern
         default: "(\\d{4,5}-\\d{1,3})[-_](seg|gtv)"
+      - id: label
+        source: "#get_task_entities/label"
     out:
       - id: results
       - id: status
