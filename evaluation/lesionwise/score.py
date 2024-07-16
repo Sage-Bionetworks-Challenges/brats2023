@@ -87,9 +87,8 @@ def extract_metrics(df, label, scan_id):
     ]
     tissues = ["ET", "WT", "TC"]
 
-    # Do not return lesionwise metrics if challenge task is BraTS-MEN-RT.
+    # BraTS-MEN-RT only has one tissue under evaluation.
     if label == "BraTS-MEN-RT":
-        del select_cols[1:3]
         tissues = ["GTV"]
     res = (
         df.set_index("Labels")
@@ -145,8 +144,8 @@ def main():
     syn = synapseclient.Synapse(configPath=args.synapse_config)
     syn.login(silent=True)
 
-    # BraTS-MEN-RT organizers requested to only return full Dice
-    # and HD95 scores back to participants.
+    # BraTS-MEN-RT results only has one tissue, so it'd be more convenient
+    # to have all metrics in a single file.
     if args.label == "BraTS-MEN-RT":
         results.to_csv("all_scores.csv")
     else:
