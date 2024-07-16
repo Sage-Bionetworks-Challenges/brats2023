@@ -94,6 +94,10 @@ steps:
         source: "#download_goldstandard/filepath"
       - id: entity_type
         source: "#download_submission/entity_type"
+      - id: pred_pattern
+        default: "(\\d{4,5}-\\d{1,3})"
+      - id: gold_pattern
+        default: "(\\d{4,5}-\\d{1,3})-(seg|gtv)"
     out:
       - id: results
       - id: status
