@@ -75,6 +75,8 @@ def extract_metrics(df, label, scan_id):
     """Get scores for three regions: ET, WT, and TC."""
     select_cols = [
         "Labels",
+        "LesionWise_Score_Dice",
+        "LesionWise_Score_HD95",
         "Legacy_Dice",
         "Legacy_HD95",
         "Sensitivity",
@@ -83,12 +85,16 @@ def extract_metrics(df, label, scan_id):
         "Num_FP",
         "Num_FN",
     ]
-    if label != "BraTS-MEN-RT":
-        select_cols[1:1] = ["LesionWise_Score_Dice", "LesionWise_Score_HD95"]
+    tissues = ["ET", "WT", "TC"]
+
+    # Do not return lesionwise metrics if challenge task is BraTS-MEN-RT.
+    if label == "BraTS-MEN-RT":
+        del select_cols[1:3]
+        tissues = ["GTV"]
     res = (
         df.set_index("Labels")
         .filter(items=select_cols)
-        .filter(items=["ET", "WT", "TC"], axis=0)
+        .filter(items=tissues, axis=0)
         .reset_index()
         .assign(scan_id=f"{label}-{scan_id}")
         .pivot(index="scan_id", columns="Labels")
