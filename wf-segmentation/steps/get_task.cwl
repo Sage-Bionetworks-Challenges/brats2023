@@ -31,13 +31,13 @@ expression: |2-
       };
     } else if (inputs.queue == "9615543") {
       return {
-        synid: "UPDATE_ME",
+        synid: "syn61612353",
         label: "BraTS-SSA"
       };
     } else if (inputs.queue == "9615544") {
       return {
-        synid: "UPDATE_ME", // FIXME
-        label: "BraTS-MEN-RT" // FIXME
+        synid: "syn61484747",
+        label: "BraTS-MEN-RT"
       };
     } else if (inputs.queue == "9615546") {
       return {
