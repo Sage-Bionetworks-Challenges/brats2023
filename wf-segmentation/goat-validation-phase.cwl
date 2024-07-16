@@ -88,7 +88,7 @@ steps:
 
   validate:
     doc: Validate submission, which should be a tar/zip of NIfTI files
-    run: steps/validate.cwl
+    run: steps/goat-validate.cwl
     in:
       - id: input_file
         source: "#download_submission/filepath"
