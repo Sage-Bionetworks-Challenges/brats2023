@@ -97,7 +97,7 @@ steps:
       - id: pred_pattern
         default: "(\\d{4,5}-\\d{1,3})"
       - id: gold_pattern
-        default: "(\\d{4,5}-\\d{1,3})-(seg|gtv)"
+        default: "(\\d{4,5}-\\d{1,3})[-_](seg|gtv)"
     out:
       - id: results
       - id: status

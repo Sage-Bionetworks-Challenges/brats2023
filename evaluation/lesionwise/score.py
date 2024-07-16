@@ -53,7 +53,7 @@ def calculate_per_lesion(parent, pred, scan_id, label):
             )
         case "BraTS-MEN-RT":
             # BraTS-MEN-RT uses GTV instead of SEG as the goldstandard.
-            gold = os.path.join(parent, f"{label}-{scan_id}-gtv.nii.gz")
+            gold = os.path.join(parent, f"{label}-{scan_id}_gtv.nii.gz")
             return metrics_MEN_RT.get_LesionWiseResults(
                 pred_file=pred, gt_file=gold, challenge_name=label
             )
