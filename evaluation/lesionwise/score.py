@@ -9,13 +9,18 @@ Run lesion-wise computation and return:
   - Number of TP, FP, FN
 """
 import os
+import re
 import argparse
 import json
 
 import pandas as pd
 import synapseclient
 import utils
-import metrics
+import metrics_GLI
+import metrics_MEN_RT
+import metrics_MET
+import metrics_PED
+import metrics_SSA
 
 
 def get_args():
@@ -34,14 +39,36 @@ def get_args():
     return parser.parse_args()
 
 
-def calculate_per_lesion(pred, gold, label):
+def calculate_per_lesion(parent, pred, scan_id, label):
     """
     Run per-lesionwise computation of prediction scan against
     goldstandard.
     """
-    return metrics.get_LesionWiseResults(
-        pred_file=pred, gt_file=gold, challenge_name=label
-    )
+    # Default goldstandard file format.
+    gold = os.path.join(parent, f"{label}-{scan_id}-seg.nii.gz")
+    match label:
+        case "BraTS-GLI":
+            return metrics_GLI.get_LesionWiseResults(
+                pred_file=pred, gt_file=gold, challenge_name=label
+            )
+        case "BraTS-MEN-RT":
+            # BraTS-MEN-RT uses GTV instead of SEG as the goldstandard.
+            gold = os.path.join(parent, f"{label}-{scan_id}-gtv.nii.gz")
+            return metrics_MEN_RT.get_LesionWiseResults(
+                pred_file=pred, gt_file=gold, challenge_name=label
+            )
+        case "BraTS-MET":
+            return metrics_MET.get_LesionWiseResults(
+                pred_file=pred, gt_file=gold, challenge_name=label
+            )
+        case "BraTS-PED":
+            return metrics_PED.get_LesionWiseResults(
+                pred_file=pred, gt_file=gold, challenge_name=label
+            )
+        case "BraTS-SSA":
+            return metrics_SSA.get_LesionWiseResults(
+                pred_file=pred, gt_file=gold, challenge_name=label
+            )
 
 
 def extract_metrics(df, label, scan_id):
@@ -56,7 +83,7 @@ def extract_metrics(df, label, scan_id):
         "Num_FP",
         "Num_FN",
     ]
-    if label != "BraTS-MEN":  # FIXME after dryrunning
+    if label != "BraTS-MEN-RT":
         select_cols[1:1] = ["LesionWise_Score_Dice", "LesionWise_Score_HD95"]
     res = (
         df.set_index("Labels")
@@ -82,9 +109,8 @@ def score(parent, pred_lst, label):
     """Compute and return scores for each scan."""
     scores = []
     for pred in pred_lst:
-        scan_id = pred[-16:-7]
-        gold = os.path.join(parent, f"{label}-{scan_id}-seg.nii.gz")
-        results = calculate_per_lesion(pred, gold, label)
+        scan_id = re.search(r"(\d{4,5}-\d{1,3})\.nii\.gz$", pred).group(1)
+        results, _ = calculate_per_lesion(parent, pred, scan_id, label)
         scan_scores = extract_metrics(results, label, scan_id)
         scores.append(scan_scores)
     return pd.concat(scores).sort_values(by="scan_id")
@@ -115,7 +141,7 @@ def main():
 
     # BraTS-MEN-RT organizers requested to only return full Dice
     # and HD95 scores back to participants.
-    if args.label == "BraTS-MEN":  # FIXME after dryrunning
+    if args.label == "BraTS-MEN-RT":
         results.to_csv("all_scores.csv")
     else:
         results.to_csv(
