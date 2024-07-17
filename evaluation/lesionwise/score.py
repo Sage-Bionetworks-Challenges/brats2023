@@ -85,11 +85,10 @@ def extract_metrics(df, label, scan_id):
         "Num_FP",
         "Num_FN",
     ]
-    tissues = ["ET", "WT", "TC"]
+    tissues = ["ET", "WT", "TC",
+               "NETC", "SNFH", "RC",
+               "CC", "ED", "GTV"]
 
-    # BraTS-MEN-RT only has one tissue under evaluation.
-    if label == "BraTS-MEN-RT":
-        tissues = ["GTV"]
     res = (
         df.set_index("Labels")
         .filter(items=select_cols)
