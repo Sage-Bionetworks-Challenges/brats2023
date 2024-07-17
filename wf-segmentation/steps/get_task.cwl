@@ -21,7 +21,7 @@ expression: |2-
   ${
     if (inputs.queue == "9615542") {
       return {
-        synid: "UPDATE_ME",
+        synid: "syn61790732",
         label: "BraTS-GLI"
       };
     } else if (inputs.queue == "9615545") {
