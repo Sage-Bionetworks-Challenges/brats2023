@@ -172,6 +172,8 @@ steps:
         default: 6
       - id: subject_id_pattern
         source: "#pattern"
+      - id: check_validation_finished
+        source: "#check_validation_status/finished"
     out:
       - id: results
       - id: status

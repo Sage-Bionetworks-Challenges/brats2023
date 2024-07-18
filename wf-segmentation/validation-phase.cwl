@@ -174,6 +174,8 @@ steps:
         source: "#download_goldstandard/filepath"
       - id: label
         source: "#get_task_entities/label"
+      - id: check_validation_finished
+        source: "#check_validation_status/finished"
     out:
       - id: results
       - id: status

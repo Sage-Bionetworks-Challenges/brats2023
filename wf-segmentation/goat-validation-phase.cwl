@@ -174,6 +174,8 @@ steps:
         source: "#download_goldstandard/filepath"
       - id: mapping_file
         source: "#download_mapping_file/filepath"
+      - id: check_validation_finished
+        source: "#check_validation_status/finished"
     out:
       - id: results
       - id: status
