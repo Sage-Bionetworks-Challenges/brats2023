@@ -1,6 +1,6 @@
 # Evaluation Workflow for BraTS 2023+
 
-The repository contains the evaluation workflow for the [BraTS 2023 challenge and beyond],
+The repository contains the evaluation workflows for the [BraTS 2023 challenge and beyond],
 including:
 
 * BraTS 2023
@@ -8,20 +8,29 @@ including:
 * FeTS 2024
 * BraTS 2024
 
+
+Workflows are organized by task type, e.g. the `wf-augmentation` folder contains
+the CWL workflows for the Augmentation task.  CWL scripts used by 1+ workflow
+are located in the `shared` folder.
+
+Source code of the metrics computations mentioned in the README are available
+in the `evaluation` folder of this repo, organized into sub-folders by task.
+
 [BraTS 2023 challenge and beyond]: https://www.synapse.org/brats
 
 ## BraTS 2024
 
 Branch: `main`
 
-BraTS 2024 is an extension to [BraTS 2023](#brats-2023), and will also follow the two evaluation phases.
+BraTS 2024 is an extension to [BraTS 2023](#brats-2023), and will also follow the two
+evaluation phases approach.
 
-Metrics returned and used for rankning will depend on the task:
+Metrics returned and used for ranking will depend on the task:
 
 **Task** | **Metrics** | **Ranking**
 --|--|--
-Segmentations | _More details to come_
-Inpainting | _More details to come_
+Segmentations | Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity | Lesion-wise dice, lesion-wise HD95
+Inpainting | Structural similarity index measure (SSIM), peak-signal-to-noise-ratio (PSNR), mean-square-error (MSE) | All 3 metrics
 Augmentations | Full dice, full HD95, sensitivity, specificity | Dice mean, Dice GINI index, HD95 mean, HD95 GINI index
 Pathology | Matthews correlation coefficient (MCC), F1, sensitivity, specificity | All 4 metrics
 
@@ -42,8 +51,6 @@ Metrics returned and used for ranking will depend on the task:
 Segmentations | Lesion-wise dice, lesions-wise Hausdorff 95% distance (HD95), full dice, full HD95, sensitivity, specificity | Lesion-wise dice, lesion-wise HD95
 Inpainting | Structural similarity index measure (SSIM), peak-signal-to-noise-ratio (PSNR), mean-square-error (MSE) | SSIM, PSNR, MSE
 Augmentations | Full dice, full HD95, sensitivity, specificity | Dice mean, dice variance, HD95 mean, HD95 variance
-
-Code for the above computations are available in the `evaluation` folder of the repo.
 
 ## BraTS-GoAT 2024
 
@@ -88,3 +95,4 @@ In addition to:
 * [CaPTk](https://github.com/CBICA/CaPTk)
 * [MedPerf](https://github.com/mlcommons/medperf)
 * [FeTS-AI](https://github.com/FeTS-AI/Challenge/tree/main)
+* [GaNDLF](https://github.com/mlcommons/GaNDLF)
