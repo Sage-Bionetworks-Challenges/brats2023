@@ -47,16 +47,17 @@ def get_args():
 
 def _check_header(img, label):
     """Check if img has the correct dimensions and origin."""
+    error = ""
     match label:
         case "BraTS-GLI":
             if img.header.get_data_shape() != DIM_GLI_POSTOP and \
                     not (img.header.get_qform() == ORIGIN_GLI_POSTOP).all():
                 error = ("One or more predictions is not a NIfTI file with "
                          "dimension of 182, 218, 182 or origin at [-90, 126, -72].")
-            else:
-                error = ""
         case "BraTS-MEN-RT":
-            error = ""
+            # MEN-RT doesn't have a set dimension and origin for all scans,
+            # so don't perform any checks.
+            pass
         case _:
             if img.header.get_data_shape() != DIM and \
                     not (img.header.get_qform() == ORIGIN).all():
