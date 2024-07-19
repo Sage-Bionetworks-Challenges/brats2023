@@ -4,10 +4,10 @@
 Predictions file must be a tarball or zipped archive of NIfTI files
 (*.nii.gz). Each NIfTI file must have an ID in its filename.
 """
-import os
-import re
 import argparse
 import json
+import os
+import re
 
 import nibabel as nib
 import utils
@@ -53,7 +53,7 @@ def _check_header(img, label):
             if img.header.get_data_shape() != DIM_GLI_POSTOP and \
                     not (img.header.get_qform() == ORIGIN_GLI_POSTOP).all():
                 error = ("One or more predictions is not a NIfTI file with "
-                         "dimension of 182, 218, 182 or origin at [-90, 126, -72].")
+                         "dimension of 182x218x182 or origin at [-90, 126, -72].")
         case "BraTS-MEN-RT":
             # MEN-RT doesn't have a set dimension and origin for all scans,
             # so don't perform any checks.
