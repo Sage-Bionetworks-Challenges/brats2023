@@ -46,14 +46,7 @@ def get_args():
 
 
 def _check_header(img, label):
-    """Check if img has dimension: 240x240x155 and origin: [0, -239, 0]."""
-    error = ""
-    if label != "BraTS-MEN-RT":
-        if img.header.get_data_shape() not in (DIM, DIM_GLI_POSTOP) and \
-                not (img.header.get_qform() in (ORIGIN, ORIGIN_GLI_POSTOP)).all():
-            error = ("One or more predictions is not a NIfTI file with "
-                     "the expected dimensions and/or origin. Please check "
-                     "the Submission Tutorial for more details.")
+    """Check if img has the correct dimensions and origin."""
     return error
 
 

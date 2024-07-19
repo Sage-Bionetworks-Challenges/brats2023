@@ -72,7 +72,7 @@ def calculate_per_lesion(parent, pred, scan_id, label):
 
 
 def extract_metrics(df, label, scan_id):
-    """Get scores for three regions: ET, WT, and TC."""
+    """Get scores for specific tissues."""
     select_cols = [
         "Labels",
         "LesionWise_Score_Dice",
