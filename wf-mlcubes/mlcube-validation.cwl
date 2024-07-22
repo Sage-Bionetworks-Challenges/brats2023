@@ -128,7 +128,7 @@ steps:
         source: "#synapseConfig"
       - id: submission_view
         valueFrom: "syn61833960"
-      - id: evaluation_id
+      - id: docker_evaluation_id
         default: 9615548
       - id: previous_annotation_finished
         source: "#check_unzip_results/finished"

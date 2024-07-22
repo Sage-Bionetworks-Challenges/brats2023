@@ -59,7 +59,7 @@ inputs:
   type: File
 - id: submission_view
   type: string
-- id: evaluation_id
+- id: docker_evaluation_id
   type: int
 - id: previous_annotation_finished
   type: boolean?
@@ -94,7 +94,7 @@ arguments:
 - prefix: -r
   valueFrom: results.json
 - prefix: -e
-  valueFrom: $(inputs.evaluation_id)
+  valueFrom: $(inputs.docker_evaluation_id)
 
 hints:
   DockerRequirement:
