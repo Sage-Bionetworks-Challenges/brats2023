@@ -1,7 +1,7 @@
 #!/usr/bin/env cwl-runner
 cwlVersion: v1.0
 class: Workflow
-label: BraTS 2023 - MLCube workflow
+label: BraTS 2024 - MLCube workflow
 
 requirements:
   - class: StepInputExpressionRequirement
@@ -168,75 +168,6 @@ steps:
       - id: previous_annotation_finished
         source: "#add_tarball_annots/finished"
     out: [finished]
-
-  # check_docker_status:
-  #   doc: >
-  #     Check the validation status of the submission; if 'INVALID', throw an
-  #     exception to stop the workflow - this will prevent the attempt of
-  #     scoring invalid predictions file (which will then result in errors)
-  #   run: |-
-  #     https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/check_status.cwl
-  #   in:
-  #     - id: status
-  #       source: "#get_corresponding_docker/status"
-  #     - id: previous_email_finished
-  #       source: "#send_docker_results/finished"
-  #   out: [finished]
-
-  # download_docker:
-  #   doc: Download MLCube Docker submission
-  #   run: |-
-  #     https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.0/cwl/get_submission.cwl
-  #   in:
-  #     - id: submissionid
-  #       source: "#get_corresponding_docker/docker_id"
-  #     - id: synapse_config
-  #       source: "#synapseConfig"
-  #   out: []
-
-  # get_task_entities:
-  #   doc: Get parameters based on task number
-  #   run: steps/get_task.cwl
-  #   in:
-  #     - id: queue
-  #       source: "#download_tarball/evaluation_id"
-  #   out:
-  #     - id: dataset
-  #     - id: dataset_hash
-  #     - id: data_prep_mlcube
-  #     - id: metrics_mlcube
-
-  # validate_mlcube:
-  #   doc: Run MLCube compatibility test for validation
-  #   run: steps/test_compability.cwl
-  #   in:
-  #     - id: synapse_config
-  #       source: "#synapseConfig"
-  #     - id: mlcube_file
-  #       source: "#unzip_tarball/mlcube_file"
-  #     - id: dataset
-  #       source: "#get_task_entities/dataset"
-  #     - id: dataset_hash
-  #       source: "#get_task_entities/dataset_hash"
-  #     - id: data_prep_mlcube
-  #       source: "#get_task_entities/data_prep_mlcube"
-  #     - id: metrics_mlcube
-  #       source: "#get_task_entities/metrics_mlcube"
-  #   out:
-  #     - id: results
-
-  # send_results:
-  #   doc: Check the results of the compatibility test and send to submitter
-  #   run: steps/check_results.cwl
-  #   in:
-  #     - id: submissionid
-  #       source: "#submissionId"
-  #     - id: synapse_config
-  #       source: "#synapseConfig"
-  #     - id: results
-  #       source: "#validate_mlcube/results"
-  #   out:
-  #     - id: status
  
 s:author:
 - class: s:Person
