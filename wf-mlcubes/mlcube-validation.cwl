@@ -127,7 +127,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: submission_view
-        valueFrom: "syn52146382"
+        valueFrom: "syn61833960"
       - id: evaluation_id
         default: 9615387
       - id: previous_annotation_finished
