@@ -14,14 +14,6 @@ import utils
 
 DIM = (240, 240, 155)
 DIM_GLI_POSTOP = (182, 218, 182)
-ORIGIN = [[-1.,  0., 0.,  -0.],
-          [ 0., -1., 0., 239.],
-          [ 0.,  0., 1.,   0.],
-          [ 0.,  0., 0.,   1.]]
-ORIGIN_GLI_POSTOP = [[-1., 0., 0.,   90.],
-                     [ 0., 1., 0., -126.],
-                     [ 0., 0., 1.,  -72.],
-                     [ 0., 0., 0.,    1.]]
 
 
 def get_args():
@@ -50,25 +42,24 @@ def _check_header(img, label):
     error = ""
     match label:
         case "BraTS-GLI":
-            if img.header.get_data_shape() != DIM_GLI_POSTOP or \
-                    not (img.header.get_qform() == ORIGIN_GLI_POSTOP).all():
+            if img.header.get_data_shape() != DIM_GLI_POSTOP:
                 error = ("One or more predictions is not a NIfTI file with "
-                         "dimension of 182x218x182 or origin at [-90, 126, -72].")
+                         "dimension of 182x218x182.")
         case "BraTS-MEN-RT":
             # MEN-RT doesn't have a set dimension and origin for all scans,
             # so don't perform any checks.
             pass
         case _:
-            if img.header.get_data_shape() != DIM or \
-                    not (img.header.get_qform() == ORIGIN).all():
+            if img.header.get_data_shape() != DIM:
                 error = ("One or more predictions is not a NIfTI file with "
-                         "dimension of 240x240x155 or origin at [0, -239, 0].")
+                         "dimension of 240x240x155.")
     return error
 
 
 def check_file_contents(img, parent, label):
     """Check that the file can be opened as NIfTI."""
     try:
+        print(img)
         img = nib.load(os.path.join(parent, img))
         return _check_header(img, label)
     except nib.filebasedimages.ImageFileError:
@@ -80,7 +71,6 @@ def validate_file_format(preds, parent, label):
     """Check that all files are NIfTI files (*.nii.gz)."""
     error = []
     if all(pred.endswith(".nii.gz") for pred in preds):
-
         # Ensure that all file contents are NIfTI with correct params.
         if not all((res := check_file_contents(pred, parent, label)) == "" for pred in preds):
             error = [res]
