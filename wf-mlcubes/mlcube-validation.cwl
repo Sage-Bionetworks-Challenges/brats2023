@@ -127,7 +127,7 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: submission_view
-        valueFrom: "syn61833960"
+        valueFrom: "syn61874407"
       - id: docker_evaluation_id
         default: 9615548
       - id: previous_annotation_finished
