@@ -2,8 +2,6 @@
 cwlVersion: v1.0
 class: CommandLineTool
 label: Send email with results
-$namespaces:
-  s: https://schema.org/
 
 requirements:
 - class: InlineJavascriptRequirement
