@@ -50,7 +50,7 @@ def _check_header(img, label):
     error = ""
     match label:
         case "BraTS-GLI":
-            if img.header.get_data_shape() != DIM_GLI_POSTOP and \
+            if img.header.get_data_shape() != DIM_GLI_POSTOP or \
                     not (img.header.get_qform() == ORIGIN_GLI_POSTOP).all():
                 error = ("One or more predictions is not a NIfTI file with "
                          "dimension of 182x218x182 or origin at [-90, 126, -72].")
@@ -59,7 +59,7 @@ def _check_header(img, label):
             # so don't perform any checks.
             pass
         case _:
-            if img.header.get_data_shape() != DIM and \
+            if img.header.get_data_shape() != DIM or \
                     not (img.header.get_qform() == ORIGIN).all():
                 error = ("One or more predictions is not a NIfTI file with "
                          "dimension of 240x240x155 or origin at [0, -239, 0].")

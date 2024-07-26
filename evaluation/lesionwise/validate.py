@@ -41,7 +41,7 @@ def get_args():
 def _check_header(img):
     """Check if img has dimension: 240x240x155 and origin: [0, -239, 0]."""
     error = ""
-    if img.header.get_data_shape() != DIM and \
+    if img.header.get_data_shape() != DIM or \
             not (img.header.get_qform() == ORIGIN).all():
         error = ("One or more predictions is not a NIfTI file with "
                  "dimension of 240x240x155 or origin at [0, -239, 0].")
