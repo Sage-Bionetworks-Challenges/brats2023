@@ -41,7 +41,7 @@ requirements:
             "is invalid.</b> Double-check that the submitted tarball has at "
             "least a `mlcube.yaml` file and please try again.\n\n",
             "Sincerely,\n",
-            "BraTS 2023 Organizers"
+            "BraTS Organizing Committee"
           ]
         syn.sendMessage(
           userIds=[participantid],

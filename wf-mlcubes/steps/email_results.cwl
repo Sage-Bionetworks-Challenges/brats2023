@@ -2,6 +2,8 @@
 cwlVersion: v1.0
 class: CommandLineTool
 label: Send email with results
+$namespaces:
+  s: https://schema.org/
 
 requirements:
 - class: InlineJavascriptRequirement
@@ -47,21 +49,22 @@ requirements:
       else:
         subject += "accepted"
         message.append(
-          "Thank you for participating in this year's BraTS 2023 Challenge!\n\n"
-          f"<b>Your MLCube submission (ID: {args.submissionid}) has been accepted!</b> 🎉 "
-          "Starting next week on Aug. 22nd, we will begin running the "
-          "submitted MLCubes against the unseen testing data. Results "
-          "will be announced at a later time.\n\n"
-          "Please note that <b>we did NOT run a compatibility test of your "
-          "MLCube</b>, so your submission may be at risk to failing next week. "
+          "Thank you for participating in the BraTS 2024 Challenge!\n\n"
+          f"<b>Your MLCube submission (ID: {args.submissionid}) has been "
+          "accepted!</b> 🎉 Starting next week, we will run your MLCube "
+          "against the unseen testing data, assuming you have also submitted "
+          "a short paper. If you did not submit a short paper, we will NOT "
+          "run your MLCube. Results will be announced at a later time.\n\n"
+          "Important note: we did <b>NOT run a compatibility test of your "
+          "MLCube</b>; your submission may be at risk to failing next week. "
           "If you haven't yet, we highly encourage you to "
-          "<a href='https://www.synapse.org/#!Synapse:syn51156910/wiki/622674'>"
+          "<a href='https://www.synapse.org/Synapse:syn53708249/wiki/627758'>"
           "locally test your MLCube's compatibility</a> against the sample "
-          "benchmarks to catch possible errors. You may submit again if needed.\n\n"
+          "benchmark to catch possible errors. You may submit again if needed.\n\n"
         )
       message.append(
         "Sincerely,\n"
-        "BraTS 2023 Organizers"
+        "BraTS Organizing Committee"
       )
       syn.sendMessage(
         userIds=[participantid],
