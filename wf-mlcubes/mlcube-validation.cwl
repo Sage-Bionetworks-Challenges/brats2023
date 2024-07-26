@@ -71,11 +71,11 @@ steps:
       - id: synapse_config
         source: "#synapseConfig"
       - id: parent_id
-        source: "#adminUploadSynId"
+        source: "#submitterUploadSynId"
     out:
       - id: results
       - id: mlcube
-      - id: status
+      # - id: status
 
   add_tarball_annots:
     doc: >
@@ -86,7 +86,7 @@ steps:
       - id: submissionid
         source: "#submissionId"
       - id: annotation_values
-        source: "#unzip_tarball/status"
+        source: "#unzip_tarball/results"
       - id: to_public
         default: true
       - id: force
@@ -107,8 +107,8 @@ steps:
         source: "#unzip_tarball/mlcube"
     out: [finished]
 
-  check_unzip_results:
-    doc: Ensure that at least MLCube yaml file is uploaded to Synapse.
+  end_wf_if_missing:
+    doc: Stop the workflow if mlcube.yaml is missing from the submission
     run: steps/validate_mlcube_config.cwl
     in:
       - id: mlcube
@@ -131,7 +131,7 @@ steps:
       - id: docker_evaluation_id
         default: 9615548
       - id: previous_annotation_finished
-        source: "#check_unzip_results/finished"
+        source: "#end_wf_if_missing/finished"
     out:
       - id: results
       - id: status
