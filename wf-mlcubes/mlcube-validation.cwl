@@ -168,6 +168,19 @@ steps:
       - id: previous_annotation_finished
         source: "#add_tarball_annots/finished"
     out: [finished]
+
+  set_invalid_status:
+    doc: Set status to INVALID if corresponding Docker image not found
+    run: |-
+      https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v4.1/cwl/check_status.cwl
+    in:
+      - id: status
+        source: "#get_corresponding_docker/status"
+      - id: previous_annotation_finished
+        source: "#update_tarball_annots/finished"
+      - id: previous_email_finished
+        source: "#send_docker_results/finished"
+    out: [finished]
  
 s:author:
 - class: s:Person
